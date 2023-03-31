@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db_pco:
+    image: postgres
+    environment:
+      POSTGRES_USER: "pco"
+      POSTGRES_PASSWORD: "pco"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pco_sql:/var/lib/postgresql/data
+    networks:
+      - postgres-compose-network
+    restart: on-failure
+
+networks:
+  postgres-compose-network:
+    driver: bridge
+
+volumes:
+  practical_sql:

@@ -1,4 +1,4 @@
-package mainTestes;
+package run;
 
 import view.*;
 

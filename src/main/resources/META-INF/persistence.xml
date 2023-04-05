@@ -3,15 +3,17 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="default">
+    <persistence-unit name="railways">
 
         <class>model.dto.Customer</class>
+        <class>model.dto.Order</class>
+        <class>model.dto.Product</class>
 
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/pco"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://containers-us-west-96.railway.app:5561/railway"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.username" value="pco"/>
-            <property name="hibernate.connection.password" value="pco"/>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="XgfAB1PfEgyHm84oVAhK"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
         </properties>
 

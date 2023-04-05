@@ -20,7 +20,7 @@ public class JanelaPadrao extends JFrame {
         setLocationRelativeTo(null);
         Color rosa = new Color(205,133,63);
         getContentPane().setBackground(rosa);
-        this.setIconImage(new javax.swing.ImageIcon("view/assets/icon.png").getImage());
+        this.setIconImage(new javax.swing.ImageIcon("src/main/java/view/assets/icon.png").getImage());
     
 	}
 	protected JLabel addLabel(String nome, String fonte, int x, int y, int a, int l, int tamanho,Color cor) {

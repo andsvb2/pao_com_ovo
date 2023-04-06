@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -19,10 +19,24 @@ public class Order {
 
     private String customer_phone;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "order_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
 
     public Order() {
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getOrders().add(this);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.getOrders().remove(this);
     }
 
     public Long getId() {

@@ -6,6 +6,7 @@ import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import model.PcoException;
 import model.dto.Order;
+import model.dto.Product;
 
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class OrderDAO extends DAO {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         try {
+//            List<Product> products = order.getProducts();
+//            for (Product product : products) {
+//                em.merge(product);
+//            }
             em.persist(order);
             transaction.commit();
         } catch (PersistenceException pe) {

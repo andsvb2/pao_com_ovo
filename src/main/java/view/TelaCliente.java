@@ -47,8 +47,8 @@ public class TelaCliente extends JFrame implements ActionListener {
  	}
     
     private JPanel painel;
-	private JTextField nomeField;
-    private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoNovoProd,  botaoVerSacola,  botaoQuantidade;
+	private JTextField nomeField,  qtdField;
+    private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoMais,  botaoVerSacola,  botaoQuantidade, botaoMenos;
     private JFormattedTextField textFieldData;
     MaskFormatter cepMask;
     
@@ -133,7 +133,7 @@ public class TelaCliente extends JFrame implements ActionListener {
         
         botaoAdicionarProd = new JButton("Adicionar à cesta");
         botaoAdicionarProd.setForeground(branco);
-        botaoAdicionarProd.setBounds(10, 3, 130, 30);
+        botaoAdicionarProd.setBounds(80, 340, 150, 30);
         botaoAdicionarProd.setBackground(marrom);
 //        botaoAdicionarProd.addActionListener(new ActionListener() {
         	
@@ -153,7 +153,7 @@ public class TelaCliente extends JFrame implements ActionListener {
         
         botaoVerSacola = new JButton("Ver Cesta");
         botaoVerSacola.setForeground(branco);
-        botaoVerSacola.setBounds(120, 350, 90, 30);
+        botaoVerSacola.setBounds(80, 375, 150, 30);
         botaoVerSacola.setBackground(marrom);
 //      botaoVerSacola.addActionListener(new ActionListener() {    	
 //     	@Override
@@ -167,38 +167,40 @@ public class TelaCliente extends JFrame implements ActionListener {
 //      });
         painel.add(botaoVerSacola);
         
-        botaoQuantidade = new JButton("Ver Cesta");
-        botaoQuantidade.setForeground(branco);
-        botaoQuantidade.setBounds(150, 310, 90, 30);
-        botaoQuantidade.setBackground(marrom);
-//      botaoQuantidade.addActionListener(new ActionListener() {    	
-//     	@Override
-//          public void actionPerformed(ActionEvent e) {
-//             
-//      		if(e.getSource() ==  botaoQuantidade) {      			
-//      			
-//      		}
-//      	}
-//            
-//      });
-        painel.add( botaoQuantidade);
+        addLabel("Quantidade:", 80, 310, 100, 20);             
+        qtdField = new JTextField();
+        qtdField.setForeground(marrom);
+        qtdField.setBounds(155, 310, 20, 20);
+        add(qtdField);
         
-        botaoSalvar = new JButton("Salvar");
-        botaoSalvar.setForeground(branco);
-        botaoSalvar.setBounds(10, 390, 90, 30);
-        botaoSalvar.setBackground(marrom);
-        botaoSalvar.addActionListener(this);
-        painel.add(botaoSalvar);
+	    botaoMais = new JButton("+");
+	    botaoMais.setForeground(branco);
+	    botaoMais.setBounds(180, 310, 50,10);
+	    botaoMais.setBackground(marrom);
+	    painel.add(botaoMais);	      
+	      
+	    botaoMenos = new JButton("-");
+	    botaoMenos.setForeground(branco);
+	    botaoMenos.setBounds(180, 320, 50, 10);
+	    botaoMenos.setBackground(marrom);
+	    painel.add(botaoMenos);
+              
+//        botaoSalvar = new JButton("Salvar");
+//        botaoSalvar.setForeground(branco);
+//        botaoSalvar.setBounds(10, 390, 90, 30);
+//        botaoSalvar.setBackground(marrom);
+//        botaoSalvar.addActionListener(this);
+//        painel.add(botaoSalvar);
         
-        botaoRemover = new JButton("Remover");
-        botaoRemover.setForeground(branco);
-        botaoRemover.setBounds(110, 390, 90, 30);
-        botaoRemover.setBackground(marrom);
-        botaoRemover.addActionListener(this);
-        painel.add(botaoRemover);
-        
-        JButton voltarButton = new JButton("<-");
-        voltarButton.setBounds(210, 390, 50, 30);
+//        botaoRemover = new JButton("Remover");
+//        botaoRemover.setForeground(branco);
+//        botaoRemover.setBounds(110, 390, 90, 30);
+//        botaoRemover.setBackground(marrom);
+//        botaoRemover.addActionListener(this);
+//        painel.add(botaoRemover);
+//        
+        JButton voltarButton = new JButton("Sair");
+        voltarButton.setBounds(80, 410, 150, 30);
         voltarButton.setBackground(marrom);
         voltarButton.setForeground(branco);
         voltarButton.addActionListener(new ActionListener() {
@@ -215,8 +217,8 @@ public class TelaCliente extends JFrame implements ActionListener {
         });
         
         painel.add(voltarButton);
-        painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(branco), "Cadastro de produto"));
-        painel.setPreferredSize(new Dimension(300, 430));
+        painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(branco), ""));
+        painel.setPreferredSize(new Dimension(300, 460));
        
 //		tab();
         add(painel);

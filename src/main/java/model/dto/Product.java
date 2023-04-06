@@ -17,6 +17,17 @@ public class Product {
     private String description;
     private Double unit_price;
 
+    @Column(name = "quantity_per_unit")
+    private Float quantityPerUnit;
+
+    public Float getQuantityPerUnit() {
+        return quantityPerUnit;
+    }
+
+    public void setQuantityPerUnit(Float quantityPerUnit) {
+        this.quantityPerUnit = quantityPerUnit;
+    }
+
     public Product() {
     }
 

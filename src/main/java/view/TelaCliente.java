@@ -1,31 +1,30 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.text.MaskFormatter;
-import java.text.SimpleDateFormat;
+
+
+import model.dto.Product;
+import model.dto.Order;
 
 public class TelaCliente extends JFrame implements ActionListener {
     
@@ -45,7 +44,8 @@ public class TelaCliente extends JFrame implements ActionListener {
          add(nomeLabel);        
  		 return nomeLabel;	
  	}
-    
+    private List<Product> products;
+    private JTable table;
     private JPanel painel;
 	private JTextField nomeField,  qtdField;
     private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoMais,  botaoVerSacola,  botaoQuantidade, botaoMenos;
@@ -227,14 +227,79 @@ public class TelaCliente extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+    
+
+	
+	this.products = products;
+
+    JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());
+
+    // Criação do modelo de tabela personalizado
+    ProductTableModel model = new ProductTableModel(products);
+
+    // Criação da JTable com o modelo de tabela personalizado
+    table = new JTable(model);
+
+    JScrollPane scrollPane = new JScrollPane(table);
+    panel.add(scrollPane, BorderLayout.CENTER);
+
+    getContentPane().add(panel);
+
+}
+
+// Modelo de tabela personalizado para os produtos
+private class ProductTableModel extends AbstractTableModel {
+	Order order = new Order();
+    private final String[] columnNames = {"ID", "Nome", "Descrição", "Preço"};
+    private List<Product> products = order.getProducts() ;
+
+    public ProductTableModel(List<Product> products) {
+        this.products = products;
     }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public int getRowCount() {
+        return products.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return columnNames.length;
+    }
+
+    @Override
+    public String getColumnName(int col) {
+        return columnNames[col];
+    }
+
+    @Override
+    public Object getValueAt(int row, int col) {
+        Product product = products.get(row);
+
+        switch (col) {
+            case 0:
+                return product.getId();
+            case 1:
+                return product.getName();
+            case 2:
+                return product.getDescription();
+            case 3:
+                return product.getUnit_price();
+            default:
+                return null;
+        }
+    }
 }
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	
+}
+}
+
+
     
 //    @SuppressWarnings("deprecation")
 //	public void actionPerformed(ActionEvent e) {
@@ -299,15 +364,12 @@ public class TelaCliente extends JFrame implements ActionListener {
 //		private List<Produto> produtos = new ArrayList<>();
 //		private Double valorTotal = (double) 0;
 //		
-//     public void tab() {
-//    	
+//     public void tab() {   	
 //	    //colunas da lista 
 //	    modelo  = new DefaultTableModel();
-//	    modelo.addColumn("ID");
-//	    modelo.addColumn("Nome");
-//        modelo.addColumn("Cor");
-//        modelo.addColumn("Tamanho");
-//        modelo.addColumn("Preço");
+//	    modelo.addColumn("name");
+//        modelo.addColumn("description");
+//        modelo.addColumn("unit_price");
 //
 //        produtoDao = new ProdutoDAO();
 //        
@@ -389,6 +451,6 @@ public class TelaCliente extends JFrame implements ActionListener {
 //	}
 // 
 //}
-//	
-//
+	
+
 

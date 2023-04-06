@@ -27,15 +27,20 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import java.text.SimpleDateFormat;
 
-public class TelaCliente extends JanelaPadrao implements ActionListener {
+public class TelaCliente extends JFrame implements ActionListener {
     
-	Color orchid = new Color(221,160,221);
-	Color magnetta = new Color(139,0,139); 
-    Color rosa = new Color(216,191,216); // Cria uma cor rosa
+	private Color marrom = new Color(160,82,45);
+	private Color branco = new Color(255,250,240);
+	private Color amareloQueimado = new Color(205,133,63);
+	private Color amarelo = new Color(240,230,140);
+	
+    private MaskFormatter phoneMask;
+    private JFormattedTextField telefoneField;
+
 	 
     public JLabel addLabel(String nome, int x, int y, int a, int l) {     
  	     JLabel nomeLabel = new JLabel(nome);
-         nomeLabel.setForeground(magnetta);
+         nomeLabel.setForeground(branco);
          nomeLabel.setBounds(x, y, a, l);
          add(nomeLabel);        
  		 return nomeLabel;	
@@ -43,7 +48,7 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
     
     private JPanel painel;
 	private JTextField nomeField;
-    private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoNovoProd;
+    private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoNovoProd,  botaoVerSacola,  botaoQuantidade;
     private JFormattedTextField textFieldData;
     MaskFormatter cepMask;
     
@@ -51,16 +56,32 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
    	
     	super("Menu");
 
-        getContentPane().setBackground(rosa);
-    	
+        getContentPane().setBackground(amareloQueimado);
+
         painel = new JPanel();
         painel.setLayout(null);
-       
+        painel.setBackground(amareloQueimado);
+        
         addLabel("Nome:", 20, 20, 100, 30);    
         nomeField = new JTextField();
-        nomeField.setForeground(magnetta);
-        nomeField.setBounds(120, 20, 200, 30);
+        nomeField.setForeground(marrom);
+        nomeField.setBounds(120, 20, 160, 20);
         add(nomeField);
+        
+        addLabel("Telefone:", 20, 50, 100, 20);
+        
+        try {			
+        	phoneMask = new MaskFormatter("(##) #####-####");
+        	
+        	telefoneField =  new JFormattedTextField(phoneMask);;
+	        telefoneField.setForeground(marrom);
+	        telefoneField.setBounds(120, 50, 160, 20);
+	        add(telefoneField);
+
+		
+        } catch (ParseException e) {
+			e.printStackTrace();
+		}
         
 //Adicinar remoção e adição de produtos a "Sou funcionario"
         
@@ -110,15 +131,14 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
 //        });
 //        painel.add(botaoRemoveProd);
         
-        botaoAdicionarProd = new JButton("Carrinho");
-        botaoAdicionarProd.setForeground(magnetta);
-        botaoAdicionarProd.setBounds(150, 310, 90, 20);
-        botaoAdicionarProd.setBackground(orchid);
+        botaoAdicionarProd = new JButton("Adicionar à cesta");
+        botaoAdicionarProd.setForeground(branco);
+        botaoAdicionarProd.setBounds(10, 3, 130, 30);
+        botaoAdicionarProd.setBackground(marrom);
 //        botaoAdicionarProd.addActionListener(new ActionListener() {
         	
 //       	@Override
-//            public void actionPerformed(ActionEvent e) {
-//               
+//            public void actionPerformed(ActionEvent e) {             
 //        		if(e.getSource() == botaoAdicionarProd) {      			
 //        			Produto pE = obterProduto();       			
 //        			valorTotal += pE.getValor();      			
@@ -131,24 +151,56 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
 //        });
         painel.add(botaoAdicionarProd);
         
+        botaoVerSacola = new JButton("Ver Cesta");
+        botaoVerSacola.setForeground(branco);
+        botaoVerSacola.setBounds(120, 350, 90, 30);
+        botaoVerSacola.setBackground(marrom);
+//      botaoVerSacola.addActionListener(new ActionListener() {    	
+//     	@Override
+//          public void actionPerformed(ActionEvent e) {
+//             
+//      		if(e.getSource() == botaoVerSacola) {      			
+//      			
+//      		}
+//      	}
+//            
+//      });
+        painel.add(botaoVerSacola);
+        
+        botaoQuantidade = new JButton("Ver Cesta");
+        botaoQuantidade.setForeground(branco);
+        botaoQuantidade.setBounds(150, 310, 90, 30);
+        botaoQuantidade.setBackground(marrom);
+//      botaoQuantidade.addActionListener(new ActionListener() {    	
+//     	@Override
+//          public void actionPerformed(ActionEvent e) {
+//             
+//      		if(e.getSource() ==  botaoQuantidade) {      			
+//      			
+//      		}
+//      	}
+//            
+//      });
+        painel.add( botaoQuantidade);
+        
         botaoSalvar = new JButton("Salvar");
-        botaoSalvar.setForeground(magnetta);
+        botaoSalvar.setForeground(branco);
         botaoSalvar.setBounds(10, 390, 90, 30);
-        botaoSalvar.setBackground(orchid);
+        botaoSalvar.setBackground(marrom);
         botaoSalvar.addActionListener(this);
         painel.add(botaoSalvar);
         
         botaoRemover = new JButton("Remover");
-        botaoRemover.setForeground(magnetta);
+        botaoRemover.setForeground(branco);
         botaoRemover.setBounds(110, 390, 90, 30);
-        botaoRemover.setBackground(orchid);
+        botaoRemover.setBackground(marrom);
         botaoRemover.addActionListener(this);
         painel.add(botaoRemover);
         
         JButton voltarButton = new JButton("<-");
         voltarButton.setBounds(210, 390, 50, 30);
-        voltarButton.setBackground(orchid);
-        voltarButton.setForeground(magnetta);
+        voltarButton.setBackground(marrom);
+        voltarButton.setForeground(branco);
         voltarButton.addActionListener(new ActionListener() {
         	
         	@Override
@@ -163,8 +215,8 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
         });
         
         painel.add(voltarButton);
-        painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(magnetta), "Cadastro de produto"));
-        painel.setPreferredSize(new Dimension(270, 430));
+        painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(branco), "Cadastro de produto"));
+        painel.setPreferredSize(new Dimension(300, 430));
        
 //		tab();
         add(painel);

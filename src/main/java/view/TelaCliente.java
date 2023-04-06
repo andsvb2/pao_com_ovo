@@ -5,16 +5,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.util.List;
-import java.util.List;
-import javax.swing.table.AbstractTableModel;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,9 +23,17 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.text.MaskFormatter;
 
+import jakarta.persistence.PersistenceException;
 
-import model.dto.Product;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
+import java.text.SimpleDateFormat;
+
+import model.PcoException;
+import model.dao.OrderDAO;
+import model.dao.ProductDAO;
 import model.dto.Order;
+import model.dto.Product;
 
 public class TelaCliente extends JFrame implements ActionListener {
     
@@ -44,15 +53,14 @@ public class TelaCliente extends JFrame implements ActionListener {
          add(nomeLabel);        
  		 return nomeLabel;	
  	}
-    private List<Product> products;
-    private JTable table;
+
     private JPanel painel;
 	private JTextField nomeField,  qtdField;
     private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoMais,  botaoVerSacola,  botaoQuantidade, botaoMenos;
     private JFormattedTextField textFieldData;
     MaskFormatter cepMask;
     
-    public TelaCliente() {
+    public TelaCliente() throws PcoException {
    	
     	super("Menu");
 
@@ -220,7 +228,7 @@ public class TelaCliente extends JFrame implements ActionListener {
         painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(branco), ""));
         painel.setPreferredSize(new Dimension(300, 460));
        
-//		tab();
+		tab();
         add(painel);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -228,76 +236,13 @@ public class TelaCliente extends JFrame implements ActionListener {
         setResizable(false);
         setVisible(true);
     
-
-	
-	this.products = products;
-
-    JPanel panel = new JPanel();
-    panel.setLayout(new BorderLayout());
-
-    // Criação do modelo de tabela personalizado
-    ProductTableModel model = new ProductTableModel(products);
-
-    // Criação da JTable com o modelo de tabela personalizado
-    table = new JTable(model);
-
-    JScrollPane scrollPane = new JScrollPane(table);
-    panel.add(scrollPane, BorderLayout.CENTER);
-
-    getContentPane().add(panel);
-
-}
-
-// Modelo de tabela personalizado para os produtos
-private class ProductTableModel extends AbstractTableModel {
-	Order order = new Order();
-    private final String[] columnNames = {"ID", "Nome", "Descrição", "Preço"};
-    private List<Product> products = order.getProducts() ;
-
-    public ProductTableModel(List<Product> products) {
-        this.products = products;
     }
-
-    @Override
-    public int getRowCount() {
-        return products.size();
-    }
-
-    @Override
-    public int getColumnCount() {
-        return columnNames.length;
-    }
-
-    @Override
-    public String getColumnName(int col) {
-        return columnNames[col];
-    }
-
-    @Override
-    public Object getValueAt(int row, int col) {
-        Product product = products.get(row);
-
-        switch (col) {
-            case 0:
-                return product.getId();
-            case 1:
-                return product.getName();
-            case 2:
-                return product.getDescription();
-            case 3:
-                return product.getUnit_price();
-            default:
-                return null;
-        }
-    }
-}
-
 @Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
 	
 }
-}
+
 
 
     
@@ -351,106 +296,72 @@ public void actionPerformed(ActionEvent e) {
 //        }
 //    }
 //    
-//    	private DefaultTableModel modelo;
-//		private JTable tabela;
-//		private String id;
-//		private List<Produto> produtos1;
-//		private List<Funcionario> funcionarios;
-//		private List<Cliente> clientes;
-//		private ProdutoDAO produtoDao;
-//		private FuncionarioDAO funcDao;
-//		private ClienteDAO clienteDao;
-//		private int linhaSelecionada;
-//		private List<Produto> produtos = new ArrayList<>();
-//		private Double valorTotal = (double) 0;
-//		
-//     public void tab() {   	
-//	    //colunas da lista 
-//	    modelo  = new DefaultTableModel();
-//	    modelo.addColumn("name");
-//        modelo.addColumn("description");
-//        modelo.addColumn("unit_price");
-//
-//        produtoDao = new ProdutoDAO();
-//        
-//        try {
-//      	produtos1 = produtoDao.getProdutos();    	
-//      	if(produtos1.size() > 0){
-//            
-//        	for(Produto produto : produtos1){             
-//        		Object[] linha = new Object[5];
-//                
-//                linha[0] = produto.getId();
-//                linha[1] = produto.getTipoProduto().name();
-//                linha[2] = produto.getTipoTamanho().name();
-//                linha[3] = produto.getCor();
-//                linha[4] = produto.getValor();
-//                
-//                modelo.addRow(linha);
-//            }
-//        }    
-//	        
-//		} catch (PersistenciaDacException e) {
-//			e.printStackTrace();
-//		}
-//        
-//        tabela = new JTable(modelo);
-//        
-//        tabela.addMouseListener(new MouseListener() {
-//			
-//				public void mouseReleased(MouseEvent e) {}
-//				public void mousePressed(MouseEvent e) {}
-//				public void mouseExited(MouseEvent e) {}
-//				public void mouseEntered(MouseEvent e) {}
-//				
-//				public void mouseClicked(MouseEvent e) {
-//				
-//					linhaSelecionada = tabela.getSelectedRow();
-//		
-//					if(linhaSelecionada != -1) {
-//						id = tabela.getValueAt(linhaSelecionada, 0).toString();
-//					}else {
-//						JOptionPane.showMessageDialog(null,"Selecione um produto");
-//					}
-//		            tabela.repaint();
-//				}
-//			});
-//	        
-//        JScrollPane painelTabela = new JScrollPane(tabela);
-//	    painelTabela.setBounds(10, 150, 250, 153);
-//	    add(painelTabela);  
-//	}
-//     
-//     public Produto obterProduto() {
-//		
-//    	 try {
-//				
-//    		 Produto pE = produtoDao.obterID(Long.parseLong(id));
-//			 
-//    		 produtos1 = produtoDao.getProdutos();
-//			
-//				boolean achou = false;
-//			 
-//				if(produtos1.size() > 0){
-//           
-//					for(Produto p : produtos1){
-//					 
-//						if(p.equals(pE)){
-//							achou = true;
-//							break;
-//						}
-//					}
-//					if(achou) {
-//						return pE;
-//					}
-//				}
-//			} catch (PersistenciaDacException e) {
-//				e.printStackTrace();
-//			}
-//			 return null;
-//	}
-// 
-//}
+    	private DefaultTableModel modelo;
+		private JTable tabela;
+
+		private String id;
+		private Product produto;
+		private ProductDAO productDao;
+		private OrderDAO orderDao;
+		
+		private List<Product>produtos1;
+		private List<Product> produtos2;
+		
+		private int linhaSelecionada;
+		
+     public void tab() throws PcoException {   	
+	    //colunas da lista 
+	    modelo  = new DefaultTableModel();
+	    modelo.addColumn("name");
+        modelo.addColumn("description");
+        modelo.addColumn("unit_price");
+        
+        try {
+	      	produtos1 = productDao.getAll();	
+	      	if(produtos1.size() > 0){
+	            
+	        	for(Product produto : produtos1){             
+	        		Object[] linha = new Object[3];
+	                
+	                linha[0] = produto.getName();
+	                linha[1] = produto.getDescription();
+	                linha[2] = produto.getUnit_price();
+	                
+	                modelo.addRow(linha);
+	            }
+	       }    	        
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
+        
+        tabela = new JTable(modelo);        
+        tabela.addMouseListener(new MouseListener() {
+			
+				public void mouseReleased(MouseEvent e) {}
+				public void mousePressed(MouseEvent e) {}
+				public void mouseExited(MouseEvent e) {}
+				public void mouseEntered(MouseEvent e) {}				
+				public void mouseClicked(MouseEvent e) {
+				
+					linhaSelecionada = tabela.getSelectedRow();
+		
+					if(linhaSelecionada != -1) {
+						id = tabela.getValueAt(linhaSelecionada, 0).toString();
+					}else {
+						JOptionPane.showMessageDialog(null,"Selecione um produto");
+					}
+		            tabela.repaint();
+				}
+			});
+	        
+        JScrollPane painelTabela = new JScrollPane(tabela);
+	    painelTabela.setBounds(10, 150, 250, 153);
+	    add(painelTabela);  
+	}
+     
+
+     
+}
 	
 
 

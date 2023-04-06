@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import model.PcoException;
+
 public class TelaMenu extends JanelaPadrao {
 	
 	private Color orchid = new Color(160,82,45);
@@ -42,7 +44,12 @@ public class TelaMenu extends JanelaPadrao {
 			String botao = e.getActionCommand();			
 			switch (botao) { 			
 				case "Sou cliente":
+				try {
 					new TelaCliente();
+				} catch (PcoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 					dispose();
 					
 					break;

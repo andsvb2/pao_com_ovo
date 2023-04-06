@@ -12,7 +12,7 @@ public class DAO {
         emf = Persistence.createEntityManagerFactory("pco");
     }
 
-    protected EntityManager entityManager() {
+    protected EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 

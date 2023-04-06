@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 
 import java.util.Objects;
 
@@ -11,37 +12,37 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Table(name = "product")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(nullable = false)
+    private Long id;
     private String name;
     private String description;
-    private Integer unit_price;
+    private Double unit_price;
 
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + ((name == null) ? 0 : name.hashCode());
-        result = 31 * result + ((description == null) ? 0 : description.hashCode());
-        result = 31 * result + ((unit_price == null) ? 0 : unit_price.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Product product = (Product) o;
+        return getId() != null && Objects.equals(getId(), product.getId());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
-        Product that = (Product) obj;
-
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        if (!Objects.equals(description, that.description)) return false;
-        if (!Objects.equals(unit_price, that.unit_price)) return false;
-
-        return true;
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "name = " + name + ", " +
+                "description = " + description + ", " +
+                "unit_price = " + unit_price + ")";
     }
 }

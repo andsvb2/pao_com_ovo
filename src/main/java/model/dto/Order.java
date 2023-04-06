@@ -1,47 +1,66 @@
 package model.dto;
 
 import jakarta.persistence.*;
+import org.hibernate.Hibernate;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    private String customer_name;
 
-//    @OneToOne
-//    private Customer customer;
+    private String customer_phone;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_id")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "order_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
 
     public Order() {
-
     }
 
-    public Integer getId() {
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getOrders().add(this);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        product.getOrders().remove(this);
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public LocalDateTime getOrderDate() {
-        return orderDate;
+    public String getCustomer_name() {
+        return customer_name;
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public String getCustomer_phone() {
+        return customer_phone;
+    }
+
+    public void setCustomer_phone(String customer_phone) {
+        this.customer_phone = customer_phone;
     }
 
     public List<Product> getProducts() {
@@ -53,15 +72,25 @@ public class Order {
     }
 
     @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", customer_name='" + customer_name + '\'' +
+                ", customer_phone='" + customer_phone + '\'' +
+                ", products=" + products +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Order)) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(orderDate, order.orderDate) && Objects.equals(products, order.products);
+        return getId() != null && Objects.equals(getId(), order.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderDate, products);
+        return getClass().hashCode();
     }
 }

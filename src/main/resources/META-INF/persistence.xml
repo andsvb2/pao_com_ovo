@@ -5,7 +5,6 @@
              version="3.0">
     <persistence-unit name="pco">
 
-        <class>model.dto.Customer</class>
         <class>model.dto.Order</class>
         <class>model.dto.Product</class>
 

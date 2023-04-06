@@ -19,7 +19,7 @@ CREATE TYPE measurement_unit AS enum(
     'maço'
     );
 
-create table if not exists product(
+create table if not exists products(
     id serial primary key,
     name text not null,
     unit_price numeric(6, 2) not null,
@@ -29,7 +29,7 @@ create table if not exists product(
     description text
 );
 
-insert into product(name, unit_price, quantity_per_unit, description)
+insert into products(name, unit_price, quantity_per_unit, description)
 values('Vodka', 25.00, 750, 'Vodka Slova'),
       ('Banana', 0.50, 1, 'banana maçã'),
       ('Coentro', 4.00,  1, 'coentro da roça'),

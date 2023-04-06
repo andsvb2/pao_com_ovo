@@ -1,49 +1,54 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.text.MaskFormatter;
-import java.text.SimpleDateFormat;
 
-public class TelaCliente extends JanelaPadrao implements ActionListener {
+
+import model.dto.Product;
+import model.dto.Order;
+
+public class TelaCliente extends JFrame implements ActionListener {
     
-	Color orchid = new Color(221,160,221);
-	Color magnetta = new Color(139,0,139); 
-    Color rosa = new Color(216,191,216); // Cria uma cor rosa
+	private Color marrom = new Color(160,82,45);
+	private Color branco = new Color(255,250,240);
+	private Color amareloQueimado = new Color(205,133,63);
+	private Color amarelo = new Color(240,230,140);
+	
+    private MaskFormatter phoneMask;
+    private JFormattedTextField telefoneField;
+
 	 
     public JLabel addLabel(String nome, int x, int y, int a, int l) {     
  	     JLabel nomeLabel = new JLabel(nome);
-         nomeLabel.setForeground(magnetta);
+         nomeLabel.setForeground(branco);
          nomeLabel.setBounds(x, y, a, l);
          add(nomeLabel);        
  		 return nomeLabel;	
  	}
-    
+    private List<Product> products;
+    private JTable table;
     private JPanel painel;
-	private JTextField nomeField;
-    private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoNovoProd;
+	private JTextField nomeField,  qtdField;
+    private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoMais,  botaoVerSacola,  botaoQuantidade, botaoMenos;
     private JFormattedTextField textFieldData;
     MaskFormatter cepMask;
     
@@ -51,16 +56,32 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
    	
     	super("Menu");
 
-        getContentPane().setBackground(rosa);
-    	
+        getContentPane().setBackground(amareloQueimado);
+
         painel = new JPanel();
         painel.setLayout(null);
-       
+        painel.setBackground(amareloQueimado);
+        
         addLabel("Nome:", 20, 20, 100, 30);    
         nomeField = new JTextField();
-        nomeField.setForeground(magnetta);
-        nomeField.setBounds(120, 20, 200, 30);
+        nomeField.setForeground(marrom);
+        nomeField.setBounds(120, 20, 160, 20);
         add(nomeField);
+        
+        addLabel("Telefone:", 20, 50, 100, 20);
+        
+        try {			
+        	phoneMask = new MaskFormatter("(##) #####-####");
+        	
+        	telefoneField =  new JFormattedTextField(phoneMask);;
+	        telefoneField.setForeground(marrom);
+	        telefoneField.setBounds(120, 50, 160, 20);
+	        add(telefoneField);
+
+		
+        } catch (ParseException e) {
+			e.printStackTrace();
+		}
         
 //Adicinar remoção e adição de produtos a "Sou funcionario"
         
@@ -110,15 +131,14 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
 //        });
 //        painel.add(botaoRemoveProd);
         
-        botaoAdicionarProd = new JButton("Carrinho");
-        botaoAdicionarProd.setForeground(magnetta);
-        botaoAdicionarProd.setBounds(150, 310, 90, 20);
-        botaoAdicionarProd.setBackground(orchid);
+        botaoAdicionarProd = new JButton("Adicionar à cesta");
+        botaoAdicionarProd.setForeground(branco);
+        botaoAdicionarProd.setBounds(80, 340, 150, 30);
+        botaoAdicionarProd.setBackground(marrom);
 //        botaoAdicionarProd.addActionListener(new ActionListener() {
         	
 //       	@Override
-//            public void actionPerformed(ActionEvent e) {
-//               
+//            public void actionPerformed(ActionEvent e) {             
 //        		if(e.getSource() == botaoAdicionarProd) {      			
 //        			Produto pE = obterProduto();       			
 //        			valorTotal += pE.getValor();      			
@@ -131,24 +151,58 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
 //        });
         painel.add(botaoAdicionarProd);
         
-        botaoSalvar = new JButton("Salvar");
-        botaoSalvar.setForeground(magnetta);
-        botaoSalvar.setBounds(10, 390, 90, 30);
-        botaoSalvar.setBackground(orchid);
-        botaoSalvar.addActionListener(this);
-        painel.add(botaoSalvar);
+        botaoVerSacola = new JButton("Ver Cesta");
+        botaoVerSacola.setForeground(branco);
+        botaoVerSacola.setBounds(80, 375, 150, 30);
+        botaoVerSacola.setBackground(marrom);
+//      botaoVerSacola.addActionListener(new ActionListener() {    	
+//     	@Override
+//          public void actionPerformed(ActionEvent e) {
+//             
+//      		if(e.getSource() == botaoVerSacola) {      			
+//      			
+//      		}
+//      	}
+//            
+//      });
+        painel.add(botaoVerSacola);
         
-        botaoRemover = new JButton("Remover");
-        botaoRemover.setForeground(magnetta);
-        botaoRemover.setBounds(110, 390, 90, 30);
-        botaoRemover.setBackground(orchid);
-        botaoRemover.addActionListener(this);
-        painel.add(botaoRemover);
+        addLabel("Quantidade:", 80, 310, 100, 20);             
+        qtdField = new JTextField();
+        qtdField.setForeground(marrom);
+        qtdField.setBounds(155, 310, 20, 20);
+        add(qtdField);
         
-        JButton voltarButton = new JButton("<-");
-        voltarButton.setBounds(210, 390, 50, 30);
-        voltarButton.setBackground(orchid);
-        voltarButton.setForeground(magnetta);
+	    botaoMais = new JButton("+");
+	    botaoMais.setForeground(branco);
+	    botaoMais.setBounds(180, 310, 50,10);
+	    botaoMais.setBackground(marrom);
+	    painel.add(botaoMais);	      
+	      
+	    botaoMenos = new JButton("-");
+	    botaoMenos.setForeground(branco);
+	    botaoMenos.setBounds(180, 320, 50, 10);
+	    botaoMenos.setBackground(marrom);
+	    painel.add(botaoMenos);
+              
+//        botaoSalvar = new JButton("Salvar");
+//        botaoSalvar.setForeground(branco);
+//        botaoSalvar.setBounds(10, 390, 90, 30);
+//        botaoSalvar.setBackground(marrom);
+//        botaoSalvar.addActionListener(this);
+//        painel.add(botaoSalvar);
+        
+//        botaoRemover = new JButton("Remover");
+//        botaoRemover.setForeground(branco);
+//        botaoRemover.setBounds(110, 390, 90, 30);
+//        botaoRemover.setBackground(marrom);
+//        botaoRemover.addActionListener(this);
+//        painel.add(botaoRemover);
+//        
+        JButton voltarButton = new JButton("Sair");
+        voltarButton.setBounds(80, 410, 150, 30);
+        voltarButton.setBackground(marrom);
+        voltarButton.setForeground(branco);
         voltarButton.addActionListener(new ActionListener() {
         	
         	@Override
@@ -163,8 +217,8 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
         });
         
         painel.add(voltarButton);
-        painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(magnetta), "Cadastro de produto"));
-        painel.setPreferredSize(new Dimension(270, 430));
+        painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(branco), ""));
+        painel.setPreferredSize(new Dimension(300, 460));
        
 //		tab();
         add(painel);
@@ -173,14 +227,79 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+    
+
+	
+	this.products = products;
+
+    JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());
+
+    // Criação do modelo de tabela personalizado
+    ProductTableModel model = new ProductTableModel(products);
+
+    // Criação da JTable com o modelo de tabela personalizado
+    table = new JTable(model);
+
+    JScrollPane scrollPane = new JScrollPane(table);
+    panel.add(scrollPane, BorderLayout.CENTER);
+
+    getContentPane().add(panel);
+
+}
+
+// Modelo de tabela personalizado para os produtos
+private class ProductTableModel extends AbstractTableModel {
+	Order order = new Order();
+    private final String[] columnNames = {"ID", "Nome", "Descrição", "Preço"};
+    private List<Product> products = order.getProducts() ;
+
+    public ProductTableModel(List<Product> products) {
+        this.products = products;
     }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public int getRowCount() {
+        return products.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return columnNames.length;
+    }
+
+    @Override
+    public String getColumnName(int col) {
+        return columnNames[col];
+    }
+
+    @Override
+    public Object getValueAt(int row, int col) {
+        Product product = products.get(row);
+
+        switch (col) {
+            case 0:
+                return product.getId();
+            case 1:
+                return product.getName();
+            case 2:
+                return product.getDescription();
+            case 3:
+                return product.getUnit_price();
+            default:
+                return null;
+        }
+    }
 }
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	
+}
+}
+
+
     
 //    @SuppressWarnings("deprecation")
 //	public void actionPerformed(ActionEvent e) {
@@ -245,15 +364,12 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
 //		private List<Produto> produtos = new ArrayList<>();
 //		private Double valorTotal = (double) 0;
 //		
-//     public void tab() {
-//    	
+//     public void tab() {   	
 //	    //colunas da lista 
 //	    modelo  = new DefaultTableModel();
-//	    modelo.addColumn("ID");
-//	    modelo.addColumn("Nome");
-//        modelo.addColumn("Cor");
-//        modelo.addColumn("Tamanho");
-//        modelo.addColumn("Preço");
+//	    modelo.addColumn("name");
+//        modelo.addColumn("description");
+//        modelo.addColumn("unit_price");
 //
 //        produtoDao = new ProdutoDAO();
 //        
@@ -335,6 +451,6 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
 //	}
 // 
 //}
-//	
-//
+	
+
 

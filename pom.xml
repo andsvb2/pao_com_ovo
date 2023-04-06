@@ -49,6 +49,11 @@
             <artifactId>postgresql</artifactId>
             <version>42.5.4</version>
         </dependency>
+        <dependency>
+        	<groupId>2019.1-crud-jpa</groupId>
+        	<artifactId>2019.1-crud-jpa</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

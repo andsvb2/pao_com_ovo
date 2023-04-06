@@ -29,7 +29,7 @@ public class TelaMenu extends JanelaPadrao {
 		super.addLabel("________","Serif", 60,44,490,60,50,magnetta);
 		super.addLabel("com ovo","Monospaced", 60,90,490,60,50,amarelo);
 		super.addLabel("╚════════ •°•°•° ════════╝","Serif", 40,130,490,60, 20,magnetta);
-		super.addLabel("Seja bem vindo(a), a padaria pão com ovo.", "Arial", 40,175,300,30,13,magnetta);
+		//super.addLabel("Seja bem vindo(a), a padaria pão com ovo.", "Arial", 40,175,300,30,13,magnetta);
 
 		addButton("Sou cliente", 40,210,250,30);
 		botaoFuncinario = addButton("Sou funcionário", 40,250,250, 30);

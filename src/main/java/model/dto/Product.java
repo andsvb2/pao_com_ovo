@@ -1,9 +1,15 @@
 package model.dto;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Product {
 
@@ -13,42 +19,6 @@ public class Product {
     private String name;
     private String description;
     private Integer unit_price;
-
-    public Product() {
-
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getUnit_price() {
-        return unit_price;
-    }
-
-    public void setUnit_price(Integer unit_price) {
-        this.unit_price = unit_price;
-    }
 
 
     @Override

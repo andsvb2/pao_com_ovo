@@ -29,7 +29,7 @@ public class TelaFuncionario extends JanelaPadrao{
 	private DefaultTableModel modelo;
 	private JTable tabela;
 	private Long Id;
-	private List<Order> pedidos;
+	private List<Order> pedidos = new ArrayList<>();
 	private ProductDAO productDao = new ProductDAO();
 	private OrderDAO orderDao = new OrderDAO();
 	
@@ -52,9 +52,7 @@ public class TelaFuncionario extends JanelaPadrao{
 	    //colunas da lista 
 	    modelo  = new DefaultTableModel();
 	    modelo.addColumn("Nome e telefone");
-        modelo.addColumn("Produto");
-        modelo.addColumn("Quantidade");
-        modelo.addColumn("Preço");
+        modelo.addColumn("Produtos");
         
         try {
 	      	if(pedidos.size() > 0){

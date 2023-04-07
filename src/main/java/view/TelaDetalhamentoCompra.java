@@ -23,8 +23,8 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 	private Order order;
 	private DefaultTableModel modelo;
 	private JTable tabela;
-	private double precoFinal = 0; 
-	private String totalPreco= "O preço final, é: "  + precoFinal ;
+//	private double precoFinal = 0; 
+//	private String totalPreco= "O preço final, é: "  + precoFinal ;
 	
 	public TelaDetalhamentoCompra(String nome, Order o) {
 		super(nome);
@@ -32,19 +32,19 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		this.order = o;
 		addTabela();
 		addBotoes();
-		addLabel(totalPreco, "Serif", 40, 90, 400, 390, 30, magnetta);
+//		addLabel(totalPreco, "Serif", 40, 90, 400, 390, 30, magnetta);
 		this.setVisible(true);
 	}
 
 	private void addBotoes(){
 		botaoSair = new JButton("Voltar");
-		botaoSair.setBounds(430, 250, 80, 30);
+		botaoSair.setBounds(20, 360, 100, 30);
 		this.add(botaoSair);
 		botaoSair.setForeground(magnetta);
 		botaoSair.setBackground(orchid);
 		botaoSair.addActionListener(new OuvinteVoltarTelaInicial(this));
 		botaoDeletarCompra = new JButton("Finalizar");
-		botaoDeletarCompra.setBounds(430,200,80,30);
+		botaoDeletarCompra.setBounds(390, 360, 100, 30);
 		botaoDeletarCompra.setForeground(magnetta);
 		botaoDeletarCompra.setBackground(orchid);
 		botaoDeletarCompra.addActionListener(new OuvinteDeletarPedido(this));
@@ -64,7 +64,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 					linha[0] = produto.getName();
 					linha[1] = produto.getDescription();
 					linha[2] = produto.getQuantityPerUnit();
-					precoFinal += produto.getQuantityPerUnit() * produto.getUnit_price();
+					//precoFinal += produto.getQuantityPerUnit() * produto.getUnit_price();
 					modelo.addRow(linha);
 				}
 			}
@@ -73,7 +73,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		}
 		tabela = new JTable(modelo);
 		JScrollPane painelPane = new JScrollPane(tabela);
-		painelPane.setBounds(20, 60, 400, 300);
+		painelPane.setBounds(20, 20, 470, 330);
 		add(painelPane);
 	}
 	public JButton getBotaoSair() {
@@ -104,7 +104,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		return tabela;
 	}
 
-	public double getPrecoFinal() {
-		return precoFinal;
-	}
+//	public double getPrecoFinal() {
+//		return precoFinal;
+//	}
 }

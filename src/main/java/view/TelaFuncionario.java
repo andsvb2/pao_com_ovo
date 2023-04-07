@@ -113,7 +113,7 @@ public class TelaFuncionario extends JanelaPadrao{
 		this.add(botaoDetalhes);
 		
 		botaoRefresh = new JButton("Recarregar");
-		botaoRefresh.setBounds(300, 360, 100, 30);
+		botaoRefresh.setBounds(280, 360, 100, 30);
 		botaoRefresh.setForeground(magnetta);
 		botaoRefresh.setBackground(orchid);
 		botaoRefresh.addActionListener(new ActionListener() {

@@ -50,12 +50,11 @@ public class TelaMenu extends JanelaPadrao {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-					dispose();
-					
+					dispose();					
 					break;
 				case "Sou funcionário":
-					dispose();
-					
+					new TelaFuncionario();
+					dispose();				
 					break;
 				case "Sobre":
 					new TelaSobre();

@@ -37,6 +37,7 @@ public class TelaFuncionario extends JanelaPadrao{
 
 	public TelaFuncionario(String nome) {
 		super(nome);
+		super.setSize(500, 440);
 		adJbutton();
 		try {
 			addTabela();
@@ -52,9 +53,7 @@ public class TelaFuncionario extends JanelaPadrao{
 	    //colunas da lista 
 	    modelo  = new DefaultTableModel();
 	    modelo.addColumn("Nome e telefone");
-        modelo.addColumn("Produto");
-        modelo.addColumn("Quantidade");
-        modelo.addColumn("Preço");
+        modelo.addColumn("Produtos");
         
         try {
 	      	if(pedidos.size() > 0){
@@ -94,7 +93,7 @@ public class TelaFuncionario extends JanelaPadrao{
 			});
 	        
         JScrollPane painelTabela = new JScrollPane(tabela);
-	    painelTabela.setBounds(20, 60, 400, 300);
+	    painelTabela.setBounds(20, 60, 300, 300);
 	    add(painelTabela);  
      }
 	

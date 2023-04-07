@@ -37,6 +37,7 @@ public class TelaFuncionario extends JanelaPadrao{
 
 	public TelaFuncionario(String nome) {
 		super(nome);
+		super.setSize(420,440);
 		adJbutton();
 		try {
 			addTabela();
@@ -51,19 +52,15 @@ public class TelaFuncionario extends JanelaPadrao{
 	public void addTabela() throws PcoException {   	
 	    //colunas da lista 
 	    modelo  = new DefaultTableModel();
-	    modelo.addColumn("Nome e telefone");
-        modelo.addColumn("Produtos");
+	    modelo.addColumn("Nome");
+        modelo.addColumn("telefone");
         
         try {
 	      	if(pedidos.size() > 0){
 	        	for(Order pedido : pedidos){       
-	        		String produtosTxt = "";
 	        		Object[] linha = new Object[2];
-	        		linha[0] = pedido.getCustomer_name()+ ", " + pedido.getCustomer_phone();
-	                for(Product p : pedido.getProducts()) {
-		               produtosTxt +=  p.getName();
-	                }
-	                linha[1] = produtosTxt;
+	        		linha[0] = pedido.getCustomer_name();
+	                linha[1] = pedido.getCustomer_phone();
 	                modelo.addRow(linha);
 	            }
 	       }    	        
@@ -92,7 +89,7 @@ public class TelaFuncionario extends JanelaPadrao{
 			});
 	        
         JScrollPane painelTabela = new JScrollPane(tabela);
-	    painelTabela.setBounds(20, 60, 300, 300);
+	    painelTabela.setBounds(20, 60, 400, 300);
 	    add(painelTabela);  
      }
 	

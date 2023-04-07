@@ -1,10 +1,18 @@
 package view;
 
-public class TelaFuncionario extends JanelaPadrao{
+import javax.swing.JButton;
 
-	public TelaFuncionario() {
-		super("Funcionario");
-		// TODO Auto-generated constructor stub
+public class TelaFuncionario extends JanelaPadrao{
+	private JButton botaoSair;
+	public TelaFuncionario(String nome) {
+		super(nome);
+		adJbutton();
+	}
+	
+	private void adJbutton() {
+		botaoSair = new JButton("Voltar");
+		botaoSair.setBounds(80, 410, 150, 30);
+		
 	}
 
 }

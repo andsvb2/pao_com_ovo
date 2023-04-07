@@ -7,12 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import controller.OuvinteTelaMenuParaFuncionario;
+
 public class TelaMenu extends JanelaPadrao {
 	
 	private Color orchid = new Color(160,82,45);
 	private Color magnetta = new Color(255,250,240);
 	private Color amarelo = new Color(240,230,140);
-	private JButton botaoFuncinario;
 	
 	public TelaMenu() {
 		super("Menu");
@@ -32,23 +33,22 @@ public class TelaMenu extends JanelaPadrao {
 		//super.addLabel("Seja bem vindo(a), a padaria pão com ovo.", "Arial", 40,175,300,30,13,magnetta);
 
 		addButton("Sou cliente", 40,210,250,30);
-		botaoFuncinario = addButton("Sou funcionário", 40,250,250, 30);
+		addButton("Sou funcionario", 40,250,250, 30);
 		addButton("Sobre", 40,290,250, 30);
 		addButton("Sair", 40,330,250, 30);	
 	}
 	
-	public class OuvinteInternoMenu implements ActionListener{		
+	private class OuvinteInternoMenu implements ActionListener{		
 		public void actionPerformed(ActionEvent e) {			
 			String botao = e.getActionCommand();			
 			switch (botao) { 			
 				case "Sou cliente":
 					new TelaCliente();
 					dispose();
-					
 					break;
-				case "Sou funcionário":
+				case "Sou funcionario":
+					new TelaFuncionario("Funcionario");
 					dispose();
-					
 					break;
 				case "Sobre":
 					new TelaSobre();
@@ -68,9 +68,5 @@ public class TelaMenu extends JanelaPadrao {
 		add(button);
 		button.addActionListener(new OuvinteInternoMenu());
 		return button;
-	}
-	
-	public JButton getBotaoFuncinario() {
-		return botaoFuncinario;
-	}
+	}	
 }

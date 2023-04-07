@@ -12,8 +12,8 @@ public class OuvinteTelaMenuParaFuncionario implements ActionListener{
 		tela = t;
 	}
 	public void actionPerformed(ActionEvent e) {
+		new TelaFuncionario("Tela Funcionario");
 		tela.dispose();
-		new TelaFuncionario();
 	}
 
 

@@ -32,7 +32,7 @@ public class TelaCliente extends JFrame implements ActionListener {
 	private Color branco = new Color(255,250,240);
 	private Color amareloQueimado = new Color(205,133,63);
 	private Color amarelo = new Color(240,230,140);
-	
+	private JButton voltarButton;
     private MaskFormatter phoneMask;
     private JFormattedTextField telefoneField;
 
@@ -46,7 +46,177 @@ public class TelaCliente extends JFrame implements ActionListener {
  	}
     private List<Product> products;
     private JTable table;
-    private JPanel painel;
+    public Color getMarrom() {
+		return marrom;
+	}
+
+	public void setMarrom(Color marrom) {
+		this.marrom = marrom;
+	}
+
+	public Color getBranco() {
+		return branco;
+	}
+	public JButton getVoltarButton() {
+		return voltarButton;
+	}
+	public void setBranco(Color branco) {
+		this.branco = branco;
+	}
+
+	public Color getAmareloQueimado() {
+		return amareloQueimado;
+	}
+
+	public void setAmareloQueimado(Color amareloQueimado) {
+		this.amareloQueimado = amareloQueimado;
+	}
+
+	public Color getAmarelo() {
+		return amarelo;
+	}
+
+	public void setAmarelo(Color amarelo) {
+		this.amarelo = amarelo;
+	}
+
+	public MaskFormatter getPhoneMask() {
+		return phoneMask;
+	}
+
+	public void setPhoneMask(MaskFormatter phoneMask) {
+		this.phoneMask = phoneMask;
+	}
+
+	public JFormattedTextField getTelefoneField() {
+		return telefoneField;
+	}
+
+	public void setTelefoneField(JFormattedTextField telefoneField) {
+		this.telefoneField = telefoneField;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
+	public JPanel getPainel() {
+		return painel;
+	}
+
+	public void setPainel(JPanel painel) {
+		this.painel = painel;
+	}
+
+	public JTextField getNomeField() {
+		return nomeField;
+	}
+
+	public void setNomeField(JTextField nomeField) {
+		this.nomeField = nomeField;
+	}
+
+	public JTextField getQtdField() {
+		return qtdField;
+	}
+
+	public void setQtdField(JTextField qtdField) {
+		this.qtdField = qtdField;
+	}
+
+	public JButton getBotaoSalvar() {
+		return botaoSalvar;
+	}
+
+	public void setBotaoSalvar(JButton botaoSalvar) {
+		this.botaoSalvar = botaoSalvar;
+	}
+
+	public JButton getBotaoRemover() {
+		return botaoRemover;
+	}
+
+	public void setBotaoRemover(JButton botaoRemover) {
+		this.botaoRemover = botaoRemover;
+	}
+
+	public JButton getBotaoAdicionarProd() {
+		return botaoAdicionarProd;
+	}
+
+	public void setBotaoAdicionarProd(JButton botaoAdicionarProd) {
+		this.botaoAdicionarProd = botaoAdicionarProd;
+	}
+
+	public JButton getBotaoRemoveProd() {
+		return botaoRemoveProd;
+	}
+	
+
+	public void setBotaoRemoveProd(JButton botaoRemoveProd) {
+		this.botaoRemoveProd = botaoRemoveProd;
+	}
+
+	public JButton getBotaoMais() {
+		return botaoMais;
+	}
+
+	public void setBotaoMais(JButton botaoMais) {
+		this.botaoMais = botaoMais;
+	}
+
+	public JButton getBotaoVerSacola() {
+		return botaoVerSacola;
+	}
+
+	public void setBotaoVerSacola(JButton botaoVerSacola) {
+		this.botaoVerSacola = botaoVerSacola;
+	}
+
+	public JButton getBotaoQuantidade() {
+		return botaoQuantidade;
+	}
+
+	public void setBotaoQuantidade(JButton botaoQuantidade) {
+		this.botaoQuantidade = botaoQuantidade;
+	}
+
+	public JButton getBotaoMenos() {
+		return botaoMenos;
+	}
+
+	public void setBotaoMenos(JButton botaoMenos) {
+		this.botaoMenos = botaoMenos;
+	}
+
+	public JFormattedTextField getTextFieldData() {
+		return textFieldData;
+	}
+
+	public void setTextFieldData(JFormattedTextField textFieldData) {
+		this.textFieldData = textFieldData;
+	}
+
+	public MaskFormatter getCepMask() {
+		return cepMask;
+	}
+
+	public void setCepMask(MaskFormatter cepMask) {
+		this.cepMask = cepMask;
+	}
+	private JPanel painel;
 	private JTextField nomeField,  qtdField;
     private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoMais,  botaoVerSacola,  botaoQuantidade, botaoMenos;
     private JFormattedTextField textFieldData;
@@ -199,7 +369,7 @@ public class TelaCliente extends JFrame implements ActionListener {
 //        botaoRemover.addActionListener(this);
 //        painel.add(botaoRemover);
 //        
-        JButton voltarButton = new JButton("Sair");
+	    voltarButton = new JButton("Sair");
         voltarButton.setBounds(80, 410, 150, 30);
         voltarButton.setBackground(marrom);
         voltarButton.setForeground(branco);
@@ -262,7 +432,6 @@ private class ProductTableModel extends AbstractTableModel {
     public int getRowCount() {
         return products.size();
     }
-
     @Override
     public int getColumnCount() {
         return columnNames.length;

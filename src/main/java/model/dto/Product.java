@@ -22,7 +22,7 @@ public class Product {
     @Column(name = "quantity_per_unit")
     private Float quantityPerUnit;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "products")
     private List<Order> orders = new ArrayList<>();
 
     public List<Order> getOrders() {

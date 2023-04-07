@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import controller.OuvinteTelaMenuParaFuncionario;
+import model.PcoException;
 
 public class TelaMenu extends JanelaPadrao {
 	
@@ -43,7 +43,12 @@ public class TelaMenu extends JanelaPadrao {
 			String botao = e.getActionCommand();			
 			switch (botao) { 			
 				case "Sou cliente":
+				try {
 					new TelaCliente();
+				} catch (PcoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 					dispose();
 					break;
 				case "Sou funcionario":

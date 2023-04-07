@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -20,6 +21,7 @@ import model.PcoException;
 import model.dao.OrderDAO;
 import model.dao.ProductDAO;
 import model.dto.Order;
+import model.dto.Product;
 
 public class TelaFuncionario extends JanelaPadrao{
 	private JButton botaoSair;
@@ -32,7 +34,7 @@ public class TelaFuncionario extends JanelaPadrao{
 	private Long Id;
 	private ProductDAO productDao = new ProductDAO();
 	private OrderDAO orderDao = new OrderDAO();
-	private List<Order> pedidos = null;
+	private List<Order>pedidos = new ArrayList<>();	
 	private int linhaSelecionada;
 
 	public TelaFuncionario(String nome) {
@@ -40,8 +42,8 @@ public class TelaFuncionario extends JanelaPadrao{
 		super.setSize(525, 440);
 		adJbutton();
 		try {
-			addTabela();
 			pedidos = orderDao.getAll();
+			addTabela();
 		} catch (PcoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

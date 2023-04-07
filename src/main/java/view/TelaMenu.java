@@ -38,7 +38,7 @@ public class TelaMenu extends JanelaPadrao {
 		addButton("Sair", 40,330,250, 30);	
 	}
 	
-	private class OuvinteInternoMenu implements ActionListener{		
+	public class OuvinteInternoMenu implements ActionListener{		
 		public void actionPerformed(ActionEvent e) {			
 			String botao = e.getActionCommand();			
 			switch (botao) { 			

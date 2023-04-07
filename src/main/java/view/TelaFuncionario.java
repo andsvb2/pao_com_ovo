@@ -37,6 +37,7 @@ public class TelaFuncionario extends JanelaPadrao{
 
 	public TelaFuncionario(String nome) {
 		super(nome);
+		super.setSize(500, 440);
 		adJbutton();
 		try {
 			addTabela();

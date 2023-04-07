@@ -118,7 +118,7 @@ public class TelaCliente extends JFrame {
      	@Override
           public void actionPerformed(ActionEvent e) {          
       		if(e.getSource() == botaoVerSacola) {      			
-      			TelaCarrinho telaCarrinho = new TelaCarrinho(order);
+      			new TelaCarrinho(order);
     			dispose();
       		}
       	}

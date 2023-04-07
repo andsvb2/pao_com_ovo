@@ -92,7 +92,7 @@ public class TelaFuncionario extends JanelaPadrao{
 			});
 	        
         JScrollPane painelTabela = new JScrollPane(tabela);
-	    painelTabela.setBounds(20, 60, 400, 300);
+	    painelTabela.setBounds(20, 60, 300, 300);
 	    add(painelTabela);  
      }
 	

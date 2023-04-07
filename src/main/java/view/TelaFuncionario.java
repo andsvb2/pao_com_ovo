@@ -1,9 +1,10 @@
 package view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -19,20 +20,19 @@ import model.PcoException;
 import model.dao.OrderDAO;
 import model.dao.ProductDAO;
 import model.dto.Order;
-import model.dto.Product;
 
 public class TelaFuncionario extends JanelaPadrao{
 	private JButton botaoSair;
 	private JButton botaoDetalhes;
+	private JButton botaoRefresh;
 	private Color magnetta = new Color(255,250,240);
 	private Color orchid = new Color(160,82,45);
 	private DefaultTableModel modelo;
 	private JTable tabela;
 	private Long Id;
-	private List<Order> pedidos = new ArrayList<>();
 	private ProductDAO productDao = new ProductDAO();
 	private OrderDAO orderDao = new OrderDAO();
-	
+	private List<Order> pedidos = null;
 	private int linhaSelecionada;
 
 	public TelaFuncionario(String nome) {
@@ -57,6 +57,7 @@ public class TelaFuncionario extends JanelaPadrao{
         
         try {
 	      	if(pedidos.size() > 0){
+	      		
 	        	for(Order pedido : pedidos){       
 	        		Object[] linha = new Object[2];
 	        		linha[0] = pedido.getCustomer_name();
@@ -80,6 +81,7 @@ public class TelaFuncionario extends JanelaPadrao{
 		
 					if(linhaSelecionada != -1) {
 						Id = pedidos.get(linhaSelecionada).getId();
+						botaoDetalhes.setEnabled(true);
 					}else {
 						JOptionPane.showMessageDialog(null,"Selecione um produto");
 					}
@@ -95,16 +97,27 @@ public class TelaFuncionario extends JanelaPadrao{
 	private void adJbutton() {
 		botaoSair = new JButton("Voltar");
 		botaoSair.setBounds(20, 360, 100, 30);
-		this.add(botaoSair);
 		botaoSair.setForeground(magnetta);
 		botaoSair.setBackground(orchid);
 		botaoSair.addActionListener(new OuvinteVoltarParaMenu(this));
+		this.add(botaoSair);
 		botaoDetalhes = new JButton("Detalhes");
 		botaoDetalhes.setBounds(390,360,100,30);
 		botaoDetalhes.setForeground(magnetta);
 		botaoDetalhes.setBackground(orchid);
+		botaoDetalhes.setEnabled(false);
 		botaoDetalhes.addActionListener(new OuvinteDetalhesPedido(this));
 		this.add(botaoDetalhes);
+		botaoRefresh = new JButton("Recarregar");
+		botaoRefresh.setBounds(300, 360, 100, 30);
+		botaoRefresh.setForeground(magnetta);
+		botaoRefresh.setBackground(orchid);
+		botaoRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaFuncionario("Funcionário");
+				dispose();
+			}
+		});
 	}
 	public JButton getBotaoDetalhes() {
 		return botaoDetalhes;

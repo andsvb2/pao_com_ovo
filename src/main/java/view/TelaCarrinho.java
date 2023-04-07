@@ -31,7 +31,7 @@ public class TelaCarrinho extends JanelaPadrao {
 	
 	public TelaCarrinho(Order o) {
 		super("Carrinho");
-		super.setSize(440, 425);
+		super.setSize(440, 420);
 		this.order = o;	
 		produtos = order.getProducts();
 		try {
@@ -42,7 +42,7 @@ public class TelaCarrinho extends JanelaPadrao {
 		
 		 	botaoAdicionarProd = new JButton("Salvar");
 	        botaoAdicionarProd.setForeground(branco);
-	        botaoAdicionarProd.setBounds(20, 350, 150, 30);
+	        botaoAdicionarProd.setBounds(265, 330, 150, 30);
 	        botaoAdicionarProd.setBackground(marrom);
 	        botaoAdicionarProd.addActionListener(new ActionListener() { 	
 	        	
@@ -90,7 +90,7 @@ public class TelaCarrinho extends JanelaPadrao {
 	    
 	    tabela = new JTable(modelo); 
 	    JScrollPane painelTabela = new JScrollPane(tabela);
-	    painelTabela.setBounds(20, 20, 400, 300);
+	    painelTabela.setBounds(15, 20, 400, 300);
 	    add(painelTabela); 
 	 }
 	 
@@ -107,3 +107,4 @@ public class TelaCarrinho extends JanelaPadrao {
 
 	
 }
+

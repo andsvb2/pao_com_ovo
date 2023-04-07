@@ -15,11 +15,16 @@ import model.dto.*;
 public class TelaCarrinho extends JanelaPadrao {
 
 	private Order order;	
-
+	OrderDAO orderdao = new OrderDAO();
 	
 	public TelaCarrinho(Order o) {
 		super("Carrinho");
 		this.order = o;		
+		try {
+			orderdao.save(o);
+		} catch (PcoException e) {
+			e.printStackTrace();
+		}
 	}
 	
 //	private DefaultTableModel modelo;

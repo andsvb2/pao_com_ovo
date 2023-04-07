@@ -37,7 +37,7 @@ public class TelaFuncionario extends JanelaPadrao{
 
 	public TelaFuncionario(String nome) {
 		super(nome);
-		super.setSize(520, 440);
+		super.setSize(525, 440);
 		adJbutton();
 		try {
 			addTabela();
@@ -69,8 +69,7 @@ public class TelaFuncionario extends JanelaPadrao{
 		}
         
         tabela = new JTable(modelo);        
-        tabela.addMouseListener(new MouseListener() {
-			
+        tabela.addMouseListener(new MouseListener() {		
 				public void mouseReleased(MouseEvent e) {}
 				public void mousePressed(MouseEvent e) {}
 				public void mouseExited(MouseEvent e) {}
@@ -89,24 +88,24 @@ public class TelaFuncionario extends JanelaPadrao{
 			});
 	        
         JScrollPane painelTabela = new JScrollPane(tabela);
-	    painelTabela.setBounds(20, 60, 400, 300);
+	    painelTabela.setBounds(20, 20, 470, 330);
 	    add(painelTabela);  
      }
 	
 	private void adJbutton() {
 		botaoSair = new JButton("Voltar");
-		botaoSair.setBounds(430, 410, 80, 30);
+		botaoSair.setBounds(20, 360, 100, 30);
 		this.add(botaoSair);
 		botaoSair.setForeground(magnetta);
 		botaoSair.setBackground(orchid);
 		botaoSair.addActionListener(new OuvinteVoltarParaMenu(this));
 		botaoDetalhes = new JButton("Detalhes");
-		botaoDetalhes.setBounds(430,360,80,30);
+		botaoDetalhes.setBounds(390,360,100,30);
 		botaoDetalhes.setForeground(magnetta);
 		botaoDetalhes.setBackground(orchid);
 		botaoDetalhes.addActionListener(new OuvinteDetalhesPedido(this));
+		this.add(botaoDetalhes);
 	}
-
 	public JButton getBotaoDetalhes() {
 		return botaoDetalhes;
 	}

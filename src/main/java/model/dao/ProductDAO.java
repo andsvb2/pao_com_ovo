@@ -68,11 +68,11 @@ public class ProductDAO  extends DAO {
         }
     }
 
-    public Product getByID(int productId) throws PcoException {
+    public Product getByID(Long id) throws PcoException {
         EntityManager em = getEntityManager();
         Product resultado = null;
         try {
-            resultado = em.find(Product.class, productId);
+            resultado = em.find(Product.class, id);
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             throw new PcoException("Ocorreu algum erro ao tentar recuperar o produto com base no ID.", pe);

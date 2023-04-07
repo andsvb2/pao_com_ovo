@@ -12,6 +12,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceException;
 import model.PcoException;
 import model.dao.OrderDAO;
@@ -19,6 +22,7 @@ import model.dao.ProductDAO;
 import model.dto.*;
 
 public class TelaCarrinho extends JanelaPadrao {
+	
 
 	private Color marrom = new Color(160,82,45);
 	private Color amareloQueimado = new Color(205,133,63);
@@ -49,12 +53,32 @@ public class TelaCarrinho extends JanelaPadrao {
 	       	@Override
 	            public void actionPerformed(ActionEvent e) {             
 	        		if(e.getSource() == botaoAdicionarProd) { 
-	        			try {
-							orderdao.save(order);
-						} catch (PcoException e1) {
-							e1.printStackTrace();
-						}			
+	        			
+//							try {
+//								orderdao.save(order);
+//							} catch (PcoException e1) {
+//								// TODO Auto-generated catch block
+//								e1.printStackTrace();
+//							}
+	        				  EntityManagerFactory emf = Persistence.createEntityManagerFactory("pco");
+	        			      EntityManager em = emf.createEntityManager();
+	        			      em.getTransaction().begin();
+	        			      //em.persist(order);
+	        			      em.merge(order);
+	        			      em.getTransaction().commit();
+	        			      em.close();
+	        			      
+	        			      
 	        			JOptionPane.showMessageDialog(null, "Carrinho cadastrado!");
+	        			
+	        			try {
+							new TelaCliente();
+						} catch (PcoException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+	        			
+	        			dispose();
 	        		}
 	        	}
 	              

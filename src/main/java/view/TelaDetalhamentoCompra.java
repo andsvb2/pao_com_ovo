@@ -25,6 +25,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 	private JTable tabela;
 	private double precoFinal = 0; 
 	private String totalPreco= "O preço final, é: "  + precoFinal ;
+	
 	public TelaDetalhamentoCompra(String nome, Order o) {
 		super(nome);
 		super.setSize(520, 440);
@@ -32,6 +33,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		addTabela();
 		addBotoes();
 		addLabel(totalPreco, "Serif", 40, 90, 400, 390, 30, magnetta);
+		this.setVisible(true);
 	}
 
 	private void addBotoes(){
@@ -54,7 +56,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		modelo = new DefaultTableModel();
 		modelo.addColumn("Produto");
 		modelo.addColumn("Descrição");
-		modelo.addColumn("Quantidade");
+		modelo.addColumn("Preço");
 		try {
 			if (order.getProducts().size()> 0) {
 				for (Product produto : order.getProducts()) {

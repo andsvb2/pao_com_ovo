@@ -94,7 +94,10 @@ public class TelaCliente extends JFrame {
             public void actionPerformed(ActionEvent e) {             
         		if(e.getSource() == botaoAdicionarProd) { 
         			try {
+        				
 						order.addProduct(productDao.getByID(id));
+						order.setCustomer_name(nomeField.getText());
+						order.setCustomer_phone(telefoneField.getText());
 						botaoVerSacola.setEnabled(true);
 					} catch (PcoException e1) {
 						e1.printStackTrace();

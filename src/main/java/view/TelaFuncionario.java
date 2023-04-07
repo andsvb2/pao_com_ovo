@@ -103,6 +103,7 @@ public class TelaFuncionario extends JanelaPadrao{
 		botaoSair.setBackground(orchid);
 		botaoSair.addActionListener(new OuvinteVoltarParaMenu(this));
 		this.add(botaoSair);
+		
 		botaoDetalhes = new JButton("Detalhes");
 		botaoDetalhes.setBounds(390,360,100,30);
 		botaoDetalhes.setForeground(magnetta);
@@ -110,6 +111,7 @@ public class TelaFuncionario extends JanelaPadrao{
 		botaoDetalhes.setEnabled(false);
 		botaoDetalhes.addActionListener(new OuvinteDetalhesPedido(this));
 		this.add(botaoDetalhes);
+		
 		botaoRefresh = new JButton("Recarregar");
 		botaoRefresh.setBounds(300, 360, 100, 30);
 		botaoRefresh.setForeground(magnetta);

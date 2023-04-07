@@ -10,6 +10,8 @@ import model.dto.Product;
 
 import java.util.List;
 
+import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
+
 public class OrderDAO extends DAO {
 
     public void save(Order order) throws PcoException {
@@ -102,4 +104,20 @@ public class OrderDAO extends DAO {
         }
         return resultado;
     }
+    
+//    public void salve(Order order) {
+//        EntityManager em = EntityManagerFactoryBuilder.getInstance().createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        try {
+//            tx.begin();
+//            em.merge(order); // utilizando o método merge() ao invés de persist()
+//            tx.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            tx.rollback();
+//        } finally {
+//            em.close();
+//        }
+//    }
+
 }

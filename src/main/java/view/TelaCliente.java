@@ -99,7 +99,7 @@ public class TelaCliente extends JFrame {
 					} catch (PcoException e1) {
 						e1.printStackTrace();
 					}      			
-        			JOptionPane.showMessageDialog(null, "Produto adicioando no carrinho");
+        			JOptionPane.showMessageDialog(null, "Produto adicionado ao carrinho.");
         		}
         	}
               
@@ -213,9 +213,9 @@ public class TelaCliente extends JFrame {
 					linhaSelecionada = tabela.getSelectedRow();
 					
 					if(linhaSelecionada != -1) {
-						id = (Long) tabela.getValueAt(linhaSelecionada, 0);
+						id = produtos1.get(linhaSelecionada).getId();
 					}else {
-						JOptionPane.showMessageDialog(null,"Selecione um produto");
+						JOptionPane.showMessageDialog(null,"Selecione um produto.");
 					}
 		            tabela.repaint();
 				}

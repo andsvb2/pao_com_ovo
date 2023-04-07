@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -301,11 +302,11 @@ public void actionPerformed(ActionEvent e) {
 
 		private String id;
 		private Product produto;
-		private ProductDAO productDao;
-		private OrderDAO orderDao;
+		private ProductDAO productDao = new ProductDAO();
+		private OrderDAO orderDao = new OrderDAO();
 		
-		private List<Product>produtos1;
-		private List<Product> produtos2;
+		private List<Product>produtos1 = new ArrayList<>();
+		private List<Product> produtos2 = new ArrayList<>();
 		
 		private int linhaSelecionada;
 		

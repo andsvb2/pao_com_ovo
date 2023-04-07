@@ -19,7 +19,7 @@ public class Order {
 
     private String customer_phone;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "order_product",
             joinColumns = @JoinColumn(name = "order_id"),

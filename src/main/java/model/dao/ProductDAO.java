@@ -68,7 +68,7 @@ public class ProductDAO  extends DAO {
         }
     }
 
-    public Product getByID(int productId) throws PcoException {
+    public Product getByID(Long productId) throws PcoException {
         EntityManager em = getEntityManager();
         Product resultado = null;
         try {

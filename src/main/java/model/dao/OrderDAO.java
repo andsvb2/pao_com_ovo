@@ -73,7 +73,7 @@ public class OrderDAO extends DAO {
         }
     }
 
-    public Order getByID(int orderId) throws PcoException {
+    public Order getByID(Long orderId) throws PcoException {
         EntityManager em = getEntityManager();
         Order resultado = null;
         try {

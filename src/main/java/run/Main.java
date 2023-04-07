@@ -4,6 +4,7 @@ import view.*;
 
 public class Main {
     public static void main(String[] args) {
-        new TelaFuncionario("Super");
+    	new TelaMenu();
+//        new TelaFuncionario("Super");
     }
 }

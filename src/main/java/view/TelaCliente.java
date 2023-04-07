@@ -36,7 +36,7 @@ import model.dao.ProductDAO;
 import model.dto.Order;
 import model.dto.Product;
 
-public class TelaCliente extends JFrame implements ActionListener {
+public class TelaCliente extends JFrame {
     
 	private Color marrom = new Color(160,82,45);
 	private Color branco = new Color(255,250,240);
@@ -144,20 +144,22 @@ public class TelaCliente extends JFrame implements ActionListener {
         botaoAdicionarProd.setForeground(branco);
         botaoAdicionarProd.setBounds(20, 370, 150, 30);
         botaoAdicionarProd.setBackground(marrom);
-//        botaoAdicionarProd.addActionListener(new ActionListener() {
-        	
-//       	@Override
-//            public void actionPerformed(ActionEvent e) {             
-//        		if(e.getSource() == botaoAdicionarProd) {      			
-//        			Produto pE = obterProduto();       			
+        botaoAdicionarProd.addActionListener(new ActionListener() { 
+    	  
+        private Double valorTotal = (double) 0;
+    	  
+       	@Override
+            public void actionPerformed(ActionEvent e) {             
+        		if(e.getSource() == botaoAdicionarProd) {      			
+//        			Product pE = obterProduto();       			
 //        			valorTotal += pE.getValor();      			
 //        			textFieldValorTotal.setText(Double.toString(valorTotal));       	
-//           			produtos.add(pE);          			
-//           			JOptionPane.showMessageDialog(null, "Produto adicioando no carrinho");
-//        		}
-//        	}
-//              
-//        });
+//           		produtos.add(pE);          			
+//           		JOptionPane.showMessageDialog(null, "Produto adicioando no carrinho");
+        		}
+        	}
+              
+        });
         
         
 //        public Produto obterProduto() {   		
@@ -207,25 +209,23 @@ public class TelaCliente extends JFrame implements ActionListener {
 //            
 //      });
         painel.add(botaoVerSacola);
+
+		/*
+		 * RESERVADO PARA ATUALIZAÇOES FUTURAS
+		 * 
+		 * addLabel("Quantidade:", 80, 310, 100, 20); qtdField = new JTextField();
+		 * qtdField.setForeground(marrom); qtdField.setBounds(155, 310, 20, 20);
+		 * add(qtdField);
+		 * 
+		 * botaoMais = new JButton("+"); botaoMais.setForeground(branco);
+		 * botaoMais.setBounds(180, 310, 50,10); botaoMais.setBackground(marrom);
+		 * painel.add(botaoMais);
+		 * 
+		 * botaoMenos = new JButton("-"); botaoMenos.setForeground(branco);
+		 * botaoMenos.setBounds(180, 320, 50, 10); botaoMenos.setBackground(marrom);
+		 * painel.add(botaoMenos);
+		 */          
         
-//        addLabel("Quantidade:", 80, 310, 100, 20);             
-//        qtdField = new JTextField();
-//        qtdField.setForeground(marrom);
-//        qtdField.setBounds(155, 310, 20, 20);
-//        add(qtdField);
-//        
-//	    botaoMais = new JButton("+");
-//	    botaoMais.setForeground(branco);
-//	    botaoMais.setBounds(180, 310, 50,10);
-//	    botaoMais.setBackground(marrom);
-//	    painel.add(botaoMais);	      
-//	      
-//	    botaoMenos = new JButton("-");
-//	    botaoMenos.setForeground(branco);
-//	    botaoMenos.setBounds(180, 320, 50, 10);
-//	    botaoMenos.setBackground(marrom);
-//	    painel.add(botaoMenos);
-                   
         JButton voltarButton = new JButton("Cancelar");
         voltarButton.setBounds(300, 370, 120, 30);
         voltarButton.setBackground(marrom);
@@ -261,11 +261,6 @@ public class TelaCliente extends JFrame implements ActionListener {
         setVisible(true);
     
     }
-@Override
-public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
-	
-}
  
     	private DefaultTableModel modelo;
 		private JTable tabela;

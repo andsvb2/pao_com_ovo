@@ -29,7 +29,7 @@ public class TelaFuncionario extends JanelaPadrao{
 	private DefaultTableModel modelo;
 	private JTable tabela;
 	private Long Id;
-	private List<Order> pedidos;
+	private List<Order> pedidos = new ArrayList<>();
 	private ProductDAO productDao = new ProductDAO();
 	private OrderDAO orderDao = new OrderDAO();
 	

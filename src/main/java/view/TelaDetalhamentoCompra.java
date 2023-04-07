@@ -46,6 +46,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		botaoDeletarCompra.setForeground(magnetta);
 		botaoDeletarCompra.setBackground(orchid);
 		botaoDeletarCompra.addActionListener(new OuvinteDeletarPedido(this));
+		add(botaoDeletarCompra);
 	}
 
 	

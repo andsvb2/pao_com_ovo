@@ -37,7 +37,7 @@ public class TelaFuncionario extends JanelaPadrao{
 
 	public TelaFuncionario(String nome) {
 		super(nome);
-		super.setSize(500, 440);
+		super.setSize(520, 440);
 		adJbutton();
 		try {
 			addTabela();
@@ -95,13 +95,13 @@ public class TelaFuncionario extends JanelaPadrao{
 	
 	private void adJbutton() {
 		botaoSair = new JButton("Voltar");
-		botaoSair.setBounds(120, 410, 150, 30);
+		botaoSair.setBounds(430, 410, 80, 30);
 		this.add(botaoSair);
 		botaoSair.setForeground(magnetta);
 		botaoSair.setBackground(orchid);
 		botaoSair.addActionListener(new OuvinteVoltarParaMenu(this));
 		botaoDetalhes = new JButton("Detalhes");
-		botaoDetalhes.setBounds(70,360,150,30);
+		botaoDetalhes.setBounds(430,360,80,30);
 		botaoDetalhes.setForeground(magnetta);
 		botaoDetalhes.setBackground(orchid);
 		botaoDetalhes.addActionListener(new OuvinteDetalhesPedido(this));

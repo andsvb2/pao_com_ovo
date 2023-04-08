@@ -13,7 +13,7 @@ public class OuvinteVoltarTelaInicial implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new TelaFuncionario("Tela");
+		new TelaFuncionario("Funcionário");
 		t.dispose();
 	}
 

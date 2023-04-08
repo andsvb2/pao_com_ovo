@@ -47,7 +47,6 @@ public class TelaMenu extends JanelaPadrao {
 				try {
 					new TelaCliente();
 				} catch (PcoException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 					dispose();					

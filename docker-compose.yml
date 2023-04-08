@@ -2,13 +2,14 @@ version: '3'
 
 services:
   db_pco:
-    image: postgres
+    image: postgres:15
     environment:
       POSTGRES_USER: "pco"
       POSTGRES_PASSWORD: "pco"
     ports:
       - "5432:5432"
     volumes:
+#      - ./init.sql:/docker-entrypoint-initdb.d/db.sql
       - pco_sql:/var/lib/postgresql/data
     networks:
       - postgres-compose-network
@@ -19,4 +20,4 @@ networks:
     driver: bridge
 
 volumes:
-  practical_sql:
+  pco_sql:

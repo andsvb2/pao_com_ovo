@@ -1,20 +1,16 @@
 package view;
-
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,130 +21,137 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
-import java.text.SimpleDateFormat;
 
-public class TelaCliente extends JanelaPadrao implements ActionListener {
+import jakarta.persistence.PersistenceException;
+import model.PcoException;
+import model.dao.*;
+import model.dto.*;
+
+public class TelaCliente extends JFrame {
     
-	Color orchid = new Color(221,160,221);
-	Color magnetta = new Color(139,0,139); 
-    Color rosa = new Color(216,191,216); // Cria uma cor rosa
+	private Color marrom = new Color(160,82,45);
+	private Color amareloQueimado = new Color(205,133,63);
+	private Color branco = new Color(255,250,240);
+    private MaskFormatter phoneMask;
+    private JFormattedTextField telefoneField;
+    private JPanel painel;
+	private JTextField nomeField;
+    private JButton botaoAdicionarProd, botaoVerSacola;
+    private Double valorTotal = (double) 0;
+    
+	private DefaultTableModel modelo;
+	private JTable tabela;
+	private Long id;
+	private Product produto;
+	private ProductDAO productDao = new ProductDAO();
+	private OrderDAO orderDao = new OrderDAO();		
+	private List<Product>produtos1 = new ArrayList<>();		
+	private int linhaSelecionada;
+	private Order order = new Order();
+ 
 	 
     public JLabel addLabel(String nome, int x, int y, int a, int l) {     
  	     JLabel nomeLabel = new JLabel(nome);
-         nomeLabel.setForeground(magnetta);
+         nomeLabel.setForeground(branco);
          nomeLabel.setBounds(x, y, a, l);
          add(nomeLabel);        
  		 return nomeLabel;	
  	}
     
-    private JPanel painel;
-	private JTextField nomeField;
-    private JButton botaoSalvar,  botaoRemover, botaoAdicionarProd, botaoRemoveProd,botaoNovoProd;
-    private JFormattedTextField textFieldData;
-    MaskFormatter cepMask;
-    
-    public TelaCliente() {
-   	
-    	super("Menu");
-
-        getContentPane().setBackground(rosa);
-    	
+    public TelaCliente() throws PcoException { 	
+    	super("Cliente: carrinho de compras");
+        getContentPane().setBackground(amareloQueimado);
+        this.setIconImage(new javax.swing.ImageIcon("src/main/java/view/assets/icon.png").getImage());
         painel = new JPanel();
         painel.setLayout(null);
-       
-        addLabel("Nome:", 20, 20, 100, 30);    
+        painel.setBackground(amareloQueimado);
+        
+        addLabel("Nome:", 20, 15, 100, 30);    
         nomeField = new JTextField();
-        nomeField.setForeground(magnetta);
-        nomeField.setBounds(120, 20, 200, 30);
+        nomeField.setForeground(marrom);
+        nomeField.setBounds(60, 20, 140, 20);
         add(nomeField);
         
-//Adicinar remoção e adição de produtos a "Sou funcionario"
+        try {	
+        	addLabel("Telefone:", 215, 20, 100, 20);
+        	phoneMask = new MaskFormatter("(##)#####-####");      	
+        	telefoneField =  new JFormattedTextField(phoneMask);;
+	        telefoneField.setForeground(marrom);
+	        telefoneField.setBounds(280, 20, 140, 20);
+	        add(telefoneField);
+		
+        } catch (ParseException e) {
+			e.printStackTrace();
+		}
         
-//        botaoNovoProd = new JButton("+");
-//        botaoNovoProd.setForeground(magnetta);
-//        botaoNovoProd.setBounds(30, 310, 50, 20);
-//        botaoNovoProd.setBackground(orchid);
-//        botaoNovoProd.addActionListener(new ActionListener() {
-//        	
-//        	@Override
-//            public void actionPerformed(ActionEvent e) {
-//               
-//        		if(e.getSource() == botaoNovoProd) {
-//        			dispose();
-//        			//new CadastroProduto();   			
-//        		}
-//        	}
-//              
-//        });
-//        
-//        painel.add(botaoNovoProd);
-//        
-//        botaoRemoveProd = new JButton("-");
-//        botaoRemoveProd.setForeground(magnetta);
-//        botaoRemoveProd.setBounds(90, 310, 50, 20);
-//        botaoRemoveProd.setBackground(orchid);
-//        botaoRemoveProd.addActionListener(new ActionListener() {
-//        	
-//        	@Override
-//            public void actionPerformed(ActionEvent e) {
-//               
-//        		if(e.getSource() == botaoRemoveProd) {
-//        			
-//        			try {
-//        				Produto pE = obterProduto();
-//						produtoDao.remove(pE);						
-//						textFieldValorTotal.setText(Double.toString(0.0));					
-//						modelo.removeRow(linhaSelecionada);
-//		    	    	tabela.repaint();						
-//						JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
-//        				
-//        			}catch (PersistenciaDacException e1) {
-//        				e1.printStackTrace();
-//        			}
-//        		}
-//        	}  
-//        });
-//        painel.add(botaoRemoveProd);
-        
-        botaoAdicionarProd = new JButton("Carrinho");
-        botaoAdicionarProd.setForeground(magnetta);
-        botaoAdicionarProd.setBounds(150, 310, 90, 20);
-        botaoAdicionarProd.setBackground(orchid);
-//        botaoAdicionarProd.addActionListener(new ActionListener() {
-        	
-//       	@Override
-//            public void actionPerformed(ActionEvent e) {
-//               
-//        		if(e.getSource() == botaoAdicionarProd) {      			
-//        			Produto pE = obterProduto();       			
-//        			valorTotal += pE.getValor();      			
-//        			textFieldValorTotal.setText(Double.toString(valorTotal));       	
-//           			produtos.add(pE);          			
-//           			JOptionPane.showMessageDialog(null, "Produto adicioando no carrinho");
-//        		}
-//        	}
-//              
-//        });
+        botaoAdicionarProd = new JButton("Adicionar à cesta");
+        botaoAdicionarProd.setForeground(branco);
+        botaoAdicionarProd.setBounds(20, 370, 150, 30);
+        botaoAdicionarProd.setBackground(marrom);
+        botaoAdicionarProd.addActionListener(new ActionListener() { 
+    	  	  
+       	@Override
+            public void actionPerformed(ActionEvent e) {             
+        		if(e.getSource() == botaoAdicionarProd) { 
+        			try {     				
+						order.addProduct(productDao.getByID(id));
+						order.setCustomer_name(nomeField.getText());
+						order.setCustomer_phone(telefoneField.getText());
+						botaoVerSacola.setEnabled(true);
+					} catch (PcoException e1) {
+						e1.printStackTrace();
+					}      			
+        			JOptionPane.showMessageDialog(null, "Produto adicionado ao carrinho.");
+        		}
+        	}
+              
+        });	
+
+
         painel.add(botaoAdicionarProd);
         
-        botaoSalvar = new JButton("Salvar");
-        botaoSalvar.setForeground(magnetta);
-        botaoSalvar.setBounds(10, 390, 90, 30);
-        botaoSalvar.setBackground(orchid);
-        botaoSalvar.addActionListener(this);
-        painel.add(botaoSalvar);
+        botaoVerSacola = new JButton("Ver Cesta");
+        botaoVerSacola.setForeground(branco);
+        botaoVerSacola.setBounds(180, 370, 110, 30);
+        botaoVerSacola.setBackground(marrom);
+        botaoVerSacola.setEnabled(false);
+        botaoVerSacola.addActionListener(new ActionListener() { 
+        	
+     	@Override
+          public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == botaoVerSacola) {
+				if(!nomeField.getText().trim().equals("") && !telefoneField.getText().trim().equals("()-")) {
+					new TelaCarrinho(order);
+					dispose();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Digite seu nome e seu telefone");
+				}
+      	}
+            
+      }});
+        painel.add(botaoVerSacola);
+
+		/*
+		 * RESERVADO PARA ATUALIZAÇOES FUTURAS - (Botão QUANTIDADE)
+		 * 
+		 * addLabel("Quantidade:", 80, 310, 100, 20); qtdField = new JTextField();
+		 * qtdField.setForeground(marrom); qtdField.setBounds(155, 310, 20, 20);
+		 * add(qtdField);
+		 * 
+		 * botaoMais = new JButton("+"); botaoMais.setForeground(branco);
+		 * botaoMais.setBounds(180, 310, 50,10); botaoMais.setBackground(marrom);
+		 * painel.add(botaoMais);
+		 * 
+		 * botaoMenos = new JButton("-"); botaoMenos.setForeground(branco);
+		 * botaoMenos.setBounds(180, 320, 50, 10); botaoMenos.setBackground(marrom);
+		 * painel.add(botaoMenos);
+		 */          
         
-        botaoRemover = new JButton("Remover");
-        botaoRemover.setForeground(magnetta);
-        botaoRemover.setBounds(110, 390, 90, 30);
-        botaoRemover.setBackground(orchid);
-        botaoRemover.addActionListener(this);
-        painel.add(botaoRemover);
-        
-        JButton voltarButton = new JButton("<-");
-        voltarButton.setBounds(210, 390, 50, 30);
-        voltarButton.setBackground(orchid);
-        voltarButton.setForeground(magnetta);
+        JButton voltarButton = new JButton("Cancelar");
+        voltarButton.setBounds(300, 370, 120, 30);
+        voltarButton.setBackground(marrom);
+        voltarButton.setForeground(branco);
         voltarButton.addActionListener(new ActionListener() {
         	
         	@Override
@@ -156,185 +159,76 @@ public class TelaCliente extends JanelaPadrao implements ActionListener {
                
         		if(e.getSource() == voltarButton) {
         			dispose();
-        			new TelaMenu();   			
+        			try {
+						new TelaCliente();
+					} catch (PcoException e1) {
+						e1.printStackTrace();
+					} 			
         		}
         	}
               
         });
         
         painel.add(voltarButton);
-        painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(magnetta), "Cadastro de produto"));
-        painel.setPreferredSize(new Dimension(270, 430));
-       
-//		tab();
+        painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(branco), ""));
+        painel.setPreferredSize(new Dimension(440, 420));       
+		tab();
         add(painel);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
-    }
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-}
     
-//    @SuppressWarnings("deprecation")
-//	public void actionPerformed(ActionEvent e) {
-//    	
-//    	Cliente cliente = new Cliente();
-//        Compra compra = new Compra();
-//        Funcionario funcionario = new Funcionario(); 
-//        CompraDAO compradao = new CompraDAO();
-//
-//        if (e.getSource() == botaoSalvar) {
-//        	     	
-//        	try {
-//        		
-//	            String idFuncionario = comboBoxFunc.getSelectedItem().toString();
-//	            String idCliente = comboBoxCliente.getSelectedItem().toString();
-//	            String data = textFieldData.getText();
-//	            
-//	            Date date = new Date(data);
-//	            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//	            String dataFormatada = sdf.format(date);
-//	        
-//		           
-//	    //      	Setagem dos identificadores:
-//		
-//		    		funcionario.setId(Long.parseLong(idFuncionario));
-//		        	cliente.setId(Long.parseLong(idCliente));
-//		
-//		//        	Setagem de produto:
-//		        		
-//		        	compra.setValorTotal(valorTotal);
-//		        	compra.setDate(new Date(dataFormatada));
-//		        	compra.setFuncionario(funcionario);
-//		        	compra.setCliente(cliente);
-//		        
-//					compra.setProdutos(produtos);
-//					
-//					compradao.salvar(compra);
-//					
-//					JOptionPane.showMessageDialog(null, "Compra adicionada com sucesso!");
-//		
-//	          
-//	          
-//        	} catch (PersistenciaDacException e1) {
-//				e1.printStackTrace();
-//			}
-//        } else if (e.getSource() == botaoRemover) {
-//        	dispose();
-//        	new RemoverCompra();
-//        }
-//    }
-//    
-//    	private DefaultTableModel modelo;
-//		private JTable tabela;
-//		private String id;
-//		private List<Produto> produtos1;
-//		private List<Funcionario> funcionarios;
-//		private List<Cliente> clientes;
-//		private ProdutoDAO produtoDao;
-//		private FuncionarioDAO funcDao;
-//		private ClienteDAO clienteDao;
-//		private int linhaSelecionada;
-//		private List<Produto> produtos = new ArrayList<>();
-//		private Double valorTotal = (double) 0;
-//		
-//     public void tab() {
-//    	
-//	    //colunas da lista 
-//	    modelo  = new DefaultTableModel();
-//	    modelo.addColumn("ID");
-//	    modelo.addColumn("Nome");
-//        modelo.addColumn("Cor");
-//        modelo.addColumn("Tamanho");
-//        modelo.addColumn("Preço");
-//
-//        produtoDao = new ProdutoDAO();
-//        
-//        try {
-//      	produtos1 = produtoDao.getProdutos();    	
-//      	if(produtos1.size() > 0){
-//            
-//        	for(Produto produto : produtos1){             
-//        		Object[] linha = new Object[5];
-//                
-//                linha[0] = produto.getId();
-//                linha[1] = produto.getTipoProduto().name();
-//                linha[2] = produto.getTipoTamanho().name();
-//                linha[3] = produto.getCor();
-//                linha[4] = produto.getValor();
-//                
-//                modelo.addRow(linha);
-//            }
-//        }    
-//	        
-//		} catch (PersistenciaDacException e) {
-//			e.printStackTrace();
-//		}
-//        
-//        tabela = new JTable(modelo);
-//        
-//        tabela.addMouseListener(new MouseListener() {
-//			
-//				public void mouseReleased(MouseEvent e) {}
-//				public void mousePressed(MouseEvent e) {}
-//				public void mouseExited(MouseEvent e) {}
-//				public void mouseEntered(MouseEvent e) {}
-//				
-//				public void mouseClicked(MouseEvent e) {
-//				
-//					linhaSelecionada = tabela.getSelectedRow();
-//		
-//					if(linhaSelecionada != -1) {
-//						id = tabela.getValueAt(linhaSelecionada, 0).toString();
-//					}else {
-//						JOptionPane.showMessageDialog(null,"Selecione um produto");
-//					}
-//		            tabela.repaint();
-//				}
-//			});
-//	        
-//        JScrollPane painelTabela = new JScrollPane(tabela);
-//	    painelTabela.setBounds(10, 150, 250, 153);
-//	    add(painelTabela);  
-//	}
-//     
-//     public Produto obterProduto() {
-//		
-//    	 try {
-//				
-//    		 Produto pE = produtoDao.obterID(Long.parseLong(id));
-//			 
-//    		 produtos1 = produtoDao.getProdutos();
-//			
-//				boolean achou = false;
-//			 
-//				if(produtos1.size() > 0){
-//           
-//					for(Produto p : produtos1){
-//					 
-//						if(p.equals(pE)){
-//							achou = true;
-//							break;
-//						}
-//					}
-//					if(achou) {
-//						return pE;
-//					}
-//				}
-//			} catch (PersistenciaDacException e) {
-//				e.printStackTrace();
-//			}
-//			 return null;
-//	}
-// 
-//}
-//	
-//
-
+    }
+		
+     public void tab() throws PcoException {   	
+	    //colunas da lista 
+	    modelo  = new DefaultTableModel();
+	    modelo.addColumn("Nome");
+        modelo.addColumn("Descrição");
+        modelo.addColumn("Preço");
+        
+        try {
+	      	produtos1 = productDao.getAll();	
+	      	if(produtos1.size() > 0){
+	            
+	        	for(Product produto : produtos1){             
+	        		Object[] linha = new Object[3];
+	                
+	                linha[0] = produto.getName();
+	                linha[1] = produto.getDescription();
+	                linha[2] = produto.getUnit_price();
+	                
+	                modelo.addRow(linha);
+	            }
+	       }    	        
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
+        
+        tabela = new JTable(modelo);        
+        tabela.addMouseListener(new MouseListener() {
+			
+				public void mouseReleased(MouseEvent e) {}
+				public void mousePressed(MouseEvent e) {}
+				public void mouseExited(MouseEvent e) {}
+				public void mouseEntered(MouseEvent e) {}				
+				public void mouseClicked(MouseEvent e) {
+				
+					linhaSelecionada = tabela.getSelectedRow();
+					
+					if(linhaSelecionada != -1) {
+						id = produtos1.get(linhaSelecionada).getId();
+					}else {
+						JOptionPane.showMessageDialog(null,"Selecione um produto.");
+					}
+		            tabela.repaint();
+				}
+			});
+	        
+        JScrollPane painelTabela = new JScrollPane(tabela);
+	    painelTabela.setBounds(20, 60, 400, 300);
+	    add(painelTabela);  
+     }   
+}

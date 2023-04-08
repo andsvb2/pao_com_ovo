@@ -118,14 +118,18 @@ public class TelaCliente extends JFrame {
         botaoVerSacola.addActionListener(new ActionListener() { 
         	
      	@Override
-          public void actionPerformed(ActionEvent e) {          
-      		if(e.getSource() == botaoVerSacola) {      			
-      			new TelaCarrinho(order);
-    			dispose();
-      		}
+          public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == botaoVerSacola) {
+				if(!nomeField.getText().trim().equals("") && !telefoneField.getText().trim().equals("()-")) {
+					new TelaCarrinho(order);
+					dispose();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Digite seu nome e seu telefone");
+				}
       	}
             
-      });
+      }});
         painel.add(botaoVerSacola);
 
 		/*

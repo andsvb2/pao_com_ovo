@@ -6,7 +6,6 @@ import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import model.PcoException;
 import model.dto.Product;
-
 import java.util.List;
 
 public class ProductDAO  extends DAO {
@@ -96,5 +95,15 @@ public class ProductDAO  extends DAO {
             em.close();
         }
         return resultado;
+    }
+    
+    private EntityManager entityManager;
+    public List<Product> findByNameOrDescription(String searchText) {
+        TypedQuery<Product> query = entityManager.createQuery(
+                "SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(:searchText) OR LOWER(p.description) LIKE LOWER(:searchText)",
+                Product.class
+        );
+        query.setParameter("searchText", "%" + searchText + "%");
+        return query.getResultList();
     }
 }

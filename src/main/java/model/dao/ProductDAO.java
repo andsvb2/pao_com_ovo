@@ -96,14 +96,4 @@ public class ProductDAO  extends DAO {
         }
         return resultado;
     }
-    
-    private EntityManager entityManager;
-    public List<Product> findByNameOrDescription(String searchText) {
-        TypedQuery<Product> query = entityManager.createQuery(
-                "SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(:searchText) OR LOWER(p.description) LIKE LOWER(:searchText)",
-                Product.class
-        );
-        query.setParameter("searchText", "%" + searchText + "%");
-        return query.getResultList();
-    }
 }

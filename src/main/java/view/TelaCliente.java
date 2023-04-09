@@ -205,19 +205,6 @@ public class TelaCliente extends JFrame {
     }
     
     private void buscarProdutos(String termo) {
-    	
-//    	String keyword = searchBar.getText().trim();
-//        List<Product> products = productDao.findByNameOrDescription(keyword);
-//        modelo.setRowCount(0);
-//        for (Product p : products) {
-//            modelo.addRow(new Object[]{p.getName(), p.getDescription(), p.getUnitPrice()});
-//        }
-    	
-        List<Product> produtosEncontrados = productDao.findByNameOrDescription(termo);
-        modelo.setRowCount(0);
-        for (Product produto : produtosEncontrados) {
-            modelo.addRow(new Object[] {produto.getName(), produto.getDescription(), produto.getUnit_price()});
-        }
     }
 		
      public void tab() throws PcoException {   	

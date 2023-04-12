@@ -19,6 +19,14 @@ public class Employee {
     @Column(name = "phone")
     private String phone;
 
+    public Employee() {
+    }
+
+    public Employee(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -54,5 +62,13 @@ public class Employee {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "name = " + name + ", " +
+                "phone = " + phone + ")";
     }
 }

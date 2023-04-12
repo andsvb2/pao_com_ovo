@@ -8,6 +8,7 @@ import jakarta.persistence.TypedQuery;
 import model.PcoException;
 import model.dto.Employee;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAO extends DAO {
@@ -73,7 +74,7 @@ public class EmployeeDAO extends DAO {
         EntityManager em = getEntityManager();
         Employee resultado = null;
         try {
-            resultado = em.find(Employee.class, employeeId);
+            resultado = em.find(Employee.class, (long) employeeId);
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             throw new PcoException("Ocorreu algum erro ao tentar recuperar o funcionário com base no ID.", pe);
@@ -86,7 +87,7 @@ public class EmployeeDAO extends DAO {
 
     public List<Employee> getAll() throws PcoException {
         EntityManager em = getEntityManager();
-        List<Employee> resultado = null;
+        List<Employee> resultado = new ArrayList<>();
         try {
             TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e", Employee.class);
             resultado = query.getResultList();
@@ -97,5 +98,24 @@ public class EmployeeDAO extends DAO {
             em.close();
         }
         return resultado;
+    }
+
+    public List<Employee> findEmployeesByName(String name) throws PcoException {
+        EntityManager em = getEntityManager();
+        List<Employee> employees = new ArrayList<>();
+        try {
+            em.getTransaction().begin();
+            String jpql = "SELECT e FROM Employee e WHERE e.name = :name";
+            TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
+            query.setParameter("name", name);
+            employees = query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar funcionários.", e);
+        } finally {
+            em.close();
+        }
+        return employees;
     }
 }

@@ -55,7 +55,7 @@ public class TelaFuncionario extends JanelaPadrao{
 	    //colunas da lista 
 	    modelo  = new DefaultTableModel();
 	    modelo.addColumn("Nome");
-        modelo.addColumn("telefone");
+        modelo.addColumn("Telefone");
         
         try {
 	      	if(pedidos.size() > 0){
@@ -113,7 +113,7 @@ public class TelaFuncionario extends JanelaPadrao{
 		this.add(botaoDetalhes);
 		
 		botaoRefresh = new JButton("Recarregar");
-		botaoRefresh.setBounds(280, 360, 100, 30);
+		botaoRefresh.setBounds(180, 360, 130, 30);
 		botaoRefresh.setForeground(magnetta);
 		botaoRefresh.setBackground(orchid);
 		botaoRefresh.addActionListener(new ActionListener() {

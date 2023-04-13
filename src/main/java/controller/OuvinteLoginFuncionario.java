@@ -30,5 +30,9 @@ public class OuvinteLoginFuncionario implements ActionListener {
        if (Objects.isNull(employee)){
            JOptionPane.showConfirmDialog(null, "Selecione um funcionário", "Confirme",JOptionPane.OK_OPTION ,JOptionPane.INFORMATION_MESSAGEION_MESSA);
        }
+       else{
+           new TelaFuncionario("Funcionário");
+           dispose();
+       }
     }
 }

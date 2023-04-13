@@ -1,5 +1,6 @@
 package view;
 
+import controller.OuvinteCadastroFuncionario;
 import controller.OuvinteLoginFuncionario;
 import utilites.CreateColors;
 
@@ -24,6 +25,7 @@ public class TelaLoginFuncionario extends JanelaPadrao{
         cadastroUsuario.setBounds(100, 180, 30, 100);
         cadastroUsuario.setForeground(CreateColors.MAGNETTA);
         cadastroUsuario.setBackground(CreateColors.ORCHID);
+        cadastroUsuario.addActionListener(new OuvinteCadastroFuncionario(this));
     }
 
     public JButton getCadastroUsuario() {

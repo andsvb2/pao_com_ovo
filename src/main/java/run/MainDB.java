@@ -1,44 +1,41 @@
 package run;
 
 import model.PcoException;
-import model.dao.OrderDAO;
-import model.dao.ProductDAO;
-import model.dto.Order;
-import model.dto.Product;
+import model.dao.EmployeeDAO;
+import model.dto.Employee;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainDB {
     public static void main(String[] args) {
 
-        OrderDAO orderDAO = new OrderDAO();
-        ProductDAO productDAO = new ProductDAO();
-        List<Product> products = new ArrayList<>();
+        PopulateEmployees.main(new String[]{});
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+
         try{
-            Product p1 = new Product();
-//            p1 = productDAO.getByID(3);
-            p1.setName("vodka");
-            p1.setDescription("vodka slova morango");
-            p1.setUnit_price(32.0);
-            p1.setQuantityPerUnit(700.00f);
+            Employee emp1;
+            emp1 = employeeDAO.getByID(1);
+            System.out.println(emp1);
+            System.out.println("Fim da busca de funcionário por id.\n");
 
-            Order pedido = new Order();
-            pedido.setCustomer_name("seu João");
-            pedido.setCustomer_phone("123");
-            pedido.addProduct(p1);
-
-            System.out.println(pedido);
-
-
-            for(Product product : products){
-                System.out.println(product);
+            List<Employee> employees;
+            employees = employeeDAO.getAll();
+            for(Employee employee : employees){
+                System.out.println(employee);
             }
-            orderDAO.save(pedido);
+            System.out.println("Fim da listagem de funcionários.\n");
+
+            List<Employee> employeeList;
+            employeeList = employeeDAO.findEmployeesByName("Maria");
+            for (Employee employee : employeeList) {
+                System.out.println(employee);
+            }
+            System.out.println("Fim da listagem dos funcionários de nome 'Maria'.\n");
+
         } catch (PcoException pcoException){
             System.out.println(pcoException);
         } finally {
-            orderDAO.close();
+            employeeDAO.close();
         }
 
     }

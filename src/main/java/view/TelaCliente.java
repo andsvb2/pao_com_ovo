@@ -35,8 +35,8 @@ public class TelaCliente extends JFrame {
     private MaskFormatter phoneMask;
     private JFormattedTextField telefoneField;
     private JPanel painel;
-	private JTextField nomeField;
-    private JButton botaoAdicionarProd, botaoVerSacola;
+	private JTextField nomeField, buscaField ;
+    private JButton botaoAdicionarProd, botaoVerSacola, buscaButton;
     private Double valorTotal = (double) 0;
     
 	private DefaultTableModel modelo;
@@ -74,7 +74,7 @@ public class TelaCliente extends JFrame {
         
         try {	
         	addLabel("Telefone:", 215, 20, 100, 20);
-        	phoneMask = new MaskFormatter("(##)#####-####");      	
+        	phoneMask = new MaskFormatter("(##) #####-####");      	
         	telefoneField =  new JFormattedTextField(phoneMask);;
 	        telefoneField.setForeground(marrom);
 	        telefoneField.setBounds(280, 20, 140, 20);
@@ -110,7 +110,7 @@ public class TelaCliente extends JFrame {
 
         painel.add(botaoAdicionarProd);
         
-        botaoVerSacola = new JButton("Ver Cesta");
+        botaoVerSacola = new JButton("Ver cesta");
         botaoVerSacola.setForeground(branco);
         botaoVerSacola.setBounds(180, 370, 110, 30);
         botaoVerSacola.setBackground(marrom);
@@ -168,8 +168,33 @@ public class TelaCliente extends JFrame {
         	}
               
         });
-        
+                
         painel.add(voltarButton);
+        
+     // Adiciona o JTextField para buscar produtos
+        buscaField = new JTextField("Buscar produtos");
+        buscaField.setBounds(20, 60, 280, 20);
+        add(buscaField);
+
+        // Adiciona o JButton para realizar a busca
+        buscaButton = new JButton("Buscar");
+        buscaButton.setForeground(branco);
+        buscaButton.setBounds(310, 60, 110, 20);
+        buscaButton.setBackground(marrom);
+        buscaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+				try {
+					produtos1 = productDao.findProductsByName(buscaField.getText());
+					tab();
+				} catch (PcoException ex) {
+					throw new RuntimeException(ex);
+				}
+            }
+        });
+        add(buscaButton);
+        
+        
         painel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(branco), ""));
         painel.setPreferredSize(new Dimension(440, 420));       
 		tab();
@@ -179,10 +204,11 @@ public class TelaCliente extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+            
     
     }
-		
-     public void tab() throws PcoException {   	
+    
+     public void tab() throws PcoException {
 	    //colunas da lista 
 	    modelo  = new DefaultTableModel();
 	    modelo.addColumn("Nome");
@@ -190,7 +216,9 @@ public class TelaCliente extends JFrame {
         modelo.addColumn("Preço");
         
         try {
-	      	produtos1 = productDao.getAll();	
+			if (produtos1 == null || produtos1.isEmpty()) {
+				produtos1 = productDao.getAll();
+			}
 	      	if(produtos1.size() > 0){
 	            
 	        	for(Product produto : produtos1){             
@@ -228,7 +256,7 @@ public class TelaCliente extends JFrame {
 			});
 	        
         JScrollPane painelTabela = new JScrollPane(tabela);
-	    painelTabela.setBounds(20, 60, 400, 300);
+	    painelTabela.setBounds(20, 100, 400, 250);
 	    add(painelTabela);  
      }   
 }

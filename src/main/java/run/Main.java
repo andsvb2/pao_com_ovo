@@ -7,6 +7,5 @@ public class Main {
         PopulateProducts.main(new String[]{});
         PopulateEmployees.main(new String[]{});
         new TelaMenu();
-        new TelaMenu();
     }
 }

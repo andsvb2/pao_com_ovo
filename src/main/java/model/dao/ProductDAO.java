@@ -105,9 +105,9 @@ public class ProductDAO  extends DAO {
         List<Product> products = new ArrayList<>();
         try {
             em.getTransaction().begin();
-            String jpql = "SELECT p FROM Product p WHERE p.name = :name";
+            String jpql = "SELECT p FROM Product p WHERE LOWER(p.name) = LOWER(:name)";
             TypedQuery<Product> query = em.createQuery(jpql, Product.class);
-            query.setParameter("name", name);
+            query.setParameter("name", name.toLowerCase());
             products = query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {

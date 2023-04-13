@@ -105,9 +105,9 @@ public class EmployeeDAO extends DAO {
         List<Employee> employees = new ArrayList<>();
         try {
             em.getTransaction().begin();
-            String jpql = "SELECT e FROM Employee e WHERE e.name = :name";
+            String jpql = "SELECT e FROM Employee e WHERE LOWER(e.name) = LOWER(:name)";
             TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
-            query.setParameter("name", name);
+            query.setParameter("name", name.toLowerCase());
             employees = query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {

@@ -23,8 +23,8 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 	private Order order;
 	private DefaultTableModel modelo;
 	private JTable tabela;
-//	private double precoFinal = 0; 
-//	private String totalPreco= "O preço final, é: "  + precoFinal ;
+	private double precoFinal = 0;
+	private String totalPreco= "O preço final, é: "  + precoFinal ;
 	
 	public TelaDetalhamentoCompra(String nome, Order o) {
 		super(nome);
@@ -32,7 +32,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		this.order = o;
 		addTabela();
 		addBotoes();
-//		addLabel(totalPreco, "Serif", 40, 90, 400, 390, 30, magnetta);
+		addLabel(totalPreco, "Serif", 20, 490, 200, 30, 30, magnetta);
 		this.setVisible(true);
 	}
 
@@ -54,17 +54,26 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 	
 	private void addTabela(){
 		modelo = new DefaultTableModel();
+		modelo.addColumn("Nome");
+		modelo.addColumn("telefone");
 		modelo.addColumn("Produto");
 		modelo.addColumn("Descrição");
-		modelo.addColumn("Preço");
+		modelo.addColumn("Quantidade");
 		try {
 			if (order.getProducts().size()> 0) {
 				for (Product produto : order.getProducts()) {
 					Object[] linha = new Object[3];
-					linha[0] = produto.getName();
-					linha[1] = produto.getDescription();
-					linha[2] = produto.getQuantityPerUnit();
-					//precoFinal += produto.getQuantityPerUnit() * produto.getUnit_price();
+					int quantidade = 0;
+					for(Product p: order.getProducts()){
+						if (produto.equals(p))
+							quantidade+=1;
+					}
+					linha[0] = order.getCustomer_name();
+					linha[1] = order.getCustomer_phone();
+					linha[2] = produto.getName();
+					linha[3] = produto.getDescription();
+					linha[4] = quantidade;
+					precoFinal += produto.getUnit_price();
 					modelo.addRow(linha);
 				}
 			}

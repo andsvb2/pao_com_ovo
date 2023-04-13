@@ -62,7 +62,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		try {
 			if (order.getProducts().size()> 0) {
 				for (Product produto : order.getProducts()) {
-					Object[] linha = new Object[3];
+					Object[] linha = new Object[5];
 					int quantidade = 0;
 					for(Product p: order.getProducts()){
 						if (produto.equals(p))

@@ -17,10 +17,10 @@
 <!--            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>-->
 <!--        </properties>-->
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://babar.db.elephantsql.com/qiuprirm?ssl=true&amp;sslmode=allow"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://containers-us-west-133.railway.app:6914/railway?ssl=true&amp;sslmode=allow"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.username" value="qiuprirm"/>
-            <property name="hibernate.connection.password" value="59OX3xRmOIrA9ppXckWAHdoihbdYxlVv"/>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="61R75TLfeKQ7lZS5WgaJ"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
         </properties>
 

@@ -1,83 +1,83 @@
 package model.dao;
 
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import model.PcoException;
 import model.dto.Employee;
-import model.dto.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAO  extends DAO {
+public class EmployeeDAO extends DAO {
 
-    public void save(Product product) throws PcoException {
+    public void save(Employee employee) throws PcoException {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         try {
-            em.persist(product);
+            em.persist(employee);
             transaction.commit();
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new PcoException("Ocorreu algum erro ao tentar salvar o produto.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar salvar o funcionário.", pe);
         } finally {
             em.close();
         }
     }
 
-    public Product update(Product product) throws PcoException {
+    public Employee update(Employee employee) throws PcoException {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
-        Product resultado = product;
+        Employee resultado = employee;
         try {
-            resultado = em.merge(product);
+            resultado = em.merge(employee);
             transaction.commit();
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new PcoException("Ocorreu algum erro ao tentar atualizar o produto.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar atualizar o funcionário.", pe);
         } finally {
             em.close();
         }
         return resultado;
     }
 
-    public void delete(Product product) throws PcoException {
+    public void delete(Employee employee) throws PcoException {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         try {
-            product = em.find(Product.class, product.getId());
-            em.remove(product);
+            employee = em.find(Employee.class, employee.getId());
+            em.remove(employee);
             transaction.commit();
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new PcoException("Ocorreu algum erro ao tentar remover o produto.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar remover o funcionário.", pe);
         } finally {
             em.close();
         }
     }
 
-    public Product getByID(Long id) throws PcoException {
+    public Employee getByID(int employeeId) throws PcoException {
         EntityManager em = getEntityManager();
-        Product resultado = null;
+        Employee resultado = null;
         try {
-            resultado = em.find(Product.class, id);
+            resultado = em.find(Employee.class, (long) employeeId);
         } catch (PersistenceException pe) {
             pe.printStackTrace();
-            throw new PcoException("Ocorreu algum erro ao tentar recuperar o produto com base no ID.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar o funcionário com base no ID.", pe);
         } finally {
             em.close();
         }
@@ -85,37 +85,37 @@ public class ProductDAO  extends DAO {
         return resultado;
     }
 
-    public List<Product> getAll() throws PcoException {
+    public List<Employee> getAll() throws PcoException {
         EntityManager em = getEntityManager();
-        List<Product> resultado = null;
+        List<Employee> resultado = new ArrayList<>();
         try {
-            TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p", Product.class);
+            TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e", Employee.class);
             resultado = query.getResultList();
         } catch (PersistenceException pe) {
             pe.printStackTrace();
-            throw new PcoException("Ocorreu algum erro ao tentar recuperar todos os produtos.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar todos os funcionários.", pe);
         } finally {
             em.close();
         }
         return resultado;
     }
 
-    public List<Product> findProductsByName(String name) throws PcoException {
+    public List<Employee> findEmployeesByName(String name) throws PcoException {
         EntityManager em = getEntityManager();
-        List<Product> products = new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
         try {
             em.getTransaction().begin();
-            String jpql = "SELECT p FROM Product p WHERE p.name = :name";
-            TypedQuery<Product> query = em.createQuery(jpql, Product.class);
+            String jpql = "SELECT e FROM Employee e WHERE e.name = :name";
+            TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
             query.setParameter("name", name);
-            products = query.getResultList();
+            employees = query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PcoException("Ocorreu algum erro ao tentar recuperar produtos.", e);
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar funcionários.", e);
         } finally {
             em.close();
         }
-        return products;
+        return employees;
     }
 }

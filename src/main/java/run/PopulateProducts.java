@@ -7,7 +7,7 @@ import model.dto.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Populate {
+public class PopulateProducts {
 
     public static void main(String[] args) {
 

@@ -184,8 +184,12 @@ public class TelaCliente extends JFrame {
         buscaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Chama o método que realiza a busca
-                buscarProdutos(buscaField.getText());
+				try {
+					produtos1 = productDao.findProductsByName(buscaField.getText());
+					tab();
+				} catch (PcoException ex) {
+					throw new RuntimeException(ex);
+				}
             }
         });
         add(buscaButton);
@@ -204,10 +208,7 @@ public class TelaCliente extends JFrame {
     
     }
     
-    private void buscarProdutos(String termo) {
-    }
-		
-     public void tab() throws PcoException {   	
+     public void tab() throws PcoException {
 	    //colunas da lista 
 	    modelo  = new DefaultTableModel();
 	    modelo.addColumn("Nome");
@@ -215,7 +216,9 @@ public class TelaCliente extends JFrame {
         modelo.addColumn("Preço");
         
         try {
-	      	produtos1 = productDao.getAll();	
+			if (produtos1 == null || produtos1.isEmpty()) {
+				produtos1 = productDao.getAll();
+			}
 	      	if(produtos1.size() > 0){
 	            
 	        	for(Product produto : produtos1){             

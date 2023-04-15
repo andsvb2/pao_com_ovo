@@ -8,6 +8,7 @@ import model.PcoException;
 import model.dto.Order;
 import model.dto.Product;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
@@ -19,10 +20,7 @@ public class OrderDAO extends DAO {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         try {
-//            List<Product> products = order.getProducts();
-//            for (Product product : products) {
-//                em.merge(product);
-//            }
+            order.setCreation_time(LocalDateTime.now());
             em.persist(order);
             transaction.commit();
         } catch (PersistenceException pe) {
@@ -40,6 +38,7 @@ public class OrderDAO extends DAO {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
+        order.setCreation_time(LocalDateTime.now());
         Order resultado = order;
         try {
             resultado = em.merge(order);
@@ -104,20 +103,5 @@ public class OrderDAO extends DAO {
         }
         return resultado;
     }
-    
-//    public void salve(Order order) {
-//        EntityManager em = EntityManagerFactoryBuilder.getInstance().createEntityManager();
-//        EntityTransaction tx = em.getTransaction();
-//        try {
-//            tx.begin();
-//            em.merge(order); // utilizando o método merge() ao invés de persist()
-//            tx.commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            tx.rollback();
-//        } finally {
-//            em.close();
-//        }
-//    }
 
 }

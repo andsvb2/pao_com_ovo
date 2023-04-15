@@ -23,7 +23,7 @@ public class OuvinteDeletarPedido implements ActionListener {
 			e1.printStackTrace();
 		}
 		t.dispose();
-		new TelaMenu();
+		new TelaFuncionario("Funcionário: lista de pedidos");
 	}
 
 }

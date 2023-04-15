@@ -84,7 +84,7 @@ public class TelaCliente extends JFrame {
 			e.printStackTrace();
 		}
         
-        botaoAdicionarProd = new JButton("Adicionar à cesta");
+        botaoAdicionarProd = new JButton("Adicionar ao carrinho");
         botaoAdicionarProd.setForeground(branco);
         botaoAdicionarProd.setBounds(20, 370, 150, 30);
         botaoAdicionarProd.setBackground(marrom);
@@ -110,7 +110,7 @@ public class TelaCliente extends JFrame {
 
         painel.add(botaoAdicionarProd);
         
-        botaoVerSacola = new JButton("Ver cesta");
+        botaoVerSacola = new JButton("Ver carrinho");
         botaoVerSacola.setForeground(branco);
         botaoVerSacola.setBounds(180, 370, 110, 30);
         botaoVerSacola.setBackground(marrom);

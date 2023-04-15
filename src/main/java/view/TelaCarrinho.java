@@ -55,7 +55,7 @@ public class TelaCarrinho extends JanelaPadrao {
 							}
 
 	        			      
-	        			JOptionPane.showMessageDialog(null, "Carrinho cadastrado!");
+	        			JOptionPane.showMessageDialog(null, "Pedido cadastrado!");
 	        			
 	        			try {
 							new TelaCliente();

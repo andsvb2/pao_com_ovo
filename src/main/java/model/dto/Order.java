@@ -3,6 +3,7 @@ package model.dto;
 import jakarta.persistence.*;
 import org.hibernate.Hibernate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +27,17 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
 
+    @Column(name = "creation_time")
+    private LocalDateTime creation_time;
+
     public Order() {
+    }
+
+    public Order(String customer_name, String customer_phone, List<Product> products, LocalDateTime creation_time) {
+        this.customer_name = customer_name;
+        this.customer_phone = customer_phone;
+        this.products = products;
+        this.creation_time = creation_time;
     }
 
     public void addProduct(Product product) {
@@ -71,14 +82,12 @@ public class Order {
         this.products = products;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", customer_name='" + customer_name + '\'' +
-                ", customer_phone='" + customer_phone + '\'' +
-                ", products=" + products +
-                '}';
+    public LocalDateTime getCreation_time() {
+        return creation_time;
+    }
+
+    public void setCreation_time(LocalDateTime creation_time) {
+        this.creation_time = creation_time;
     }
 
     @Override
@@ -92,5 +101,14 @@ public class Order {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "customer_name = " + customer_name + ", " +
+                "customer_phone = " + customer_phone + ", " +
+                "creation_time = " + creation_time + ")";
     }
 }

@@ -1,25 +1,18 @@
 package view;
 
-import java.awt.Color;
+import jakarta.persistence.PersistenceException;
+import model.PcoException;
+import model.dao.OrderDAO;
+import model.dto.Order;
+import model.dto.Product;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceException;
-import model.PcoException;
-import model.dao.OrderDAO;
-import model.dao.ProductDAO;
-import model.dto.*;
 
 public class TelaCarrinho extends JanelaPadrao {
 	
@@ -54,20 +47,13 @@ public class TelaCarrinho extends JanelaPadrao {
 	            public void actionPerformed(ActionEvent e) {             
 	        		if(e.getSource() == botaoAdicionarProd) { 
 	        			
-//							try {
-//								orderdao.save(order);
-//							} catch (PcoException e1) {
+							try {
+								orderdao.save(order);
+							} catch (PcoException e1) {
 //								// TODO Auto-generated catch block
-//								e1.printStackTrace();
-//							}
-	        				  EntityManagerFactory emf = Persistence.createEntityManagerFactory("pco");
-	        			      EntityManager em = emf.createEntityManager();
-	        			      em.getTransaction().begin();
-	        			      //em.persist(order);
-	        			      em.merge(order);
-	        			      em.getTransaction().commit();
-	        			      em.close();
-	        			      
+								e1.printStackTrace();
+							}
+
 	        			      
 	        			JOptionPane.showMessageDialog(null, "Carrinho cadastrado!");
 	        			

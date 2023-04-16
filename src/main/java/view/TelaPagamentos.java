@@ -65,7 +65,7 @@ public class TelaPagamentos extends JanelaPadrao {
 		}
 
 	        // Cria um JLabel com uma imagem
-	        ImageIcon imagem = new ImageIcon("src/main/java/view/assets/qr_code_padaria_pao_com_ovo.png");
+	        ImageIcon imagem = new ImageIcon("main/java/view/assets/qr_code_padaria_pao_com_ovo.png");
 	        JLabel label = new JLabel();
 	        label.setIcon(imagem);
 	        label.setBounds(60, 122, 205, 20);

@@ -1,5 +1,6 @@
 package controller;
 
+import view.TelaCadastroFuncionario;
 import view.TelaLoginFuncionario;
 
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ public class OuvinteCadastroFuncionario implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        new TelaCadastroFuncionario("Cadastro: cadastre um funcionário");
+        t.dispose();
     }
 }

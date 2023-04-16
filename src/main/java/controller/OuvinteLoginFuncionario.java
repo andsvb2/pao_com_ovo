@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class OuvinteLoginFuncionario implements ActionListener {
     TelaLoginFuncionario tela;
@@ -28,11 +29,11 @@ public class OuvinteLoginFuncionario implements ActionListener {
        Employee employee = (Employee) JOptionPane.showInputDialog(null, "Escolha o Funcionário", "Funcionários",
                 JOptionPane.INFORMATION_MESSAGE,null, emploList.toArray(), emploList.get(0));
        if (Objects.isNull(employee)){
-           JOptionPane.showConfirmDialog(null, "Selecione um funcionário", "Confirme",JOptionPane.OK_OPTION ,JOptionPane.INFORMATION_MESSAGEION_MESSA);
+           JOptionPane.showConfirmDialog(null, "Selecione um funcionário", "Confirme",JOptionPane.OK_OPTION);
        }
        else{
            new TelaFuncionario("Funcionário");
-           dispose();
+           tela.dispose();
        }
     }
 }

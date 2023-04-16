@@ -27,6 +27,7 @@ public class TelaCadastroFuncionario extends JanelaPadrao{
         botaoVoltar =new JButton("Voltar");
         botaoVoltar.setBounds(50, 400, 100, 30);
         botaoVoltar.setBackground(CreateColors.ORCHID);
+        botaoVoltar.addActionListener(new OuvinteVoltarTelaLogin(this));
         add(botaoVoltar);
         botaoSalvar = new JButton("Salvar");
         botaoSalvar.setBounds(240, 400, 100, 30);

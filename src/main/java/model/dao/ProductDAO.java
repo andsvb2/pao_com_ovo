@@ -5,8 +5,10 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import model.PcoException;
+import model.dto.Employee;
 import model.dto.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO  extends DAO {
@@ -96,5 +98,24 @@ public class ProductDAO  extends DAO {
             em.close();
         }
         return resultado;
+    }
+
+    public List<Product> findProductsByName(String name) throws PcoException {
+        EntityManager em = getEntityManager();
+        List<Product> products = new ArrayList<>();
+        try {
+            em.getTransaction().begin();
+            String jpql = "SELECT p FROM Product p WHERE LOWER(p.name) = LOWER(:name)";
+            TypedQuery<Product> query = em.createQuery(jpql, Product.class);
+            query.setParameter("name", name.toLowerCase());
+            products = query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar produtos.", e);
+        } finally {
+            em.close();
+        }
+        return products;
     }
 }

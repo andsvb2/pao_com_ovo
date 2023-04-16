@@ -3,10 +3,7 @@ package view;
 import java.awt.Color;
 import java.util.Iterator;
 
-import javax.swing.JButton;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import controller.OuvinteDeletarPedido;
@@ -20,31 +17,32 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 	private JButton botaoDeletarCompra;
 	private Color magnetta = new Color(255,250,240);
 	private Color orchid = new Color(160,82,45);
-	private Order order;
+	private Order order = new Order();
 	private DefaultTableModel modelo;
 	private JTable tabela;
-	private double precoFinal = 0;
-	private String totalPreco= "O preço final, é: "  + precoFinal ;
-	
+
 	public TelaDetalhamentoCompra(String nome, Order o) {
 		super(nome);
 		super.setSize(520, 440);
 		this.order = o;
 		addTabela();
-		addBotoes();
-		addLabel(totalPreco, "Serif", 20, 490, 200, 30, 30, magnetta);
+        addBotoes();
+        String descricao = "Cliente: "+ o.getCustomer_name()+" Telefone: " + o.getCustomer_phone();
+        JLabel label = addLabel(descricao, "Serif", 40, 0, 450, 20, 20, magnetta);
+		label.setVerticalAlignment(SwingConstants.CENTER);
+		add(label);
 		this.setVisible(true);
 	}
 
 	private void addBotoes(){
 		botaoSair = new JButton("Voltar");
-		botaoSair.setBounds(20, 360, 100, 30);
+		botaoSair.setBounds(20, 370, 100, 30);
 		this.add(botaoSair);
 		botaoSair.setForeground(magnetta);
 		botaoSair.setBackground(orchid);
 		botaoSair.addActionListener(new OuvinteVoltarTelaInicial(this));
 		botaoDeletarCompra = new JButton("Finalizar");
-		botaoDeletarCompra.setBounds(390, 360, 100, 30);
+		botaoDeletarCompra.setBounds(390, 370, 100, 30);
 		botaoDeletarCompra.setForeground(magnetta);
 		botaoDeletarCompra.setBackground(orchid);
 		botaoDeletarCompra.addActionListener(new OuvinteDeletarPedido(this));
@@ -62,18 +60,15 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		try {
 			if (order.getProducts().size()> 0) {
 				for (Product produto : order.getProducts()) {
-					Object[] linha = new Object[5];
+					Object[] linha = new Object[3];
 					int quantidade = 0;
 					for(Product p: order.getProducts()){
 						if (produto.equals(p))
 							quantidade+=1;
 					}
-					linha[0] = order.getCustomer_name();
-					linha[1] = order.getCustomer_phone();
-					linha[2] = produto.getName();
-					linha[3] = produto.getDescription();
-					linha[4] = quantidade;
-					precoFinal += produto.getUnit_price();
+					linha[0] = produto.getName();
+					linha[1] = produto.getDescription();
+					linha[2] = quantidade;
 					modelo.addRow(linha);
 				}
 			}
@@ -82,7 +77,7 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		}
 		tabela = new JTable(modelo);
 		JScrollPane painelPane = new JScrollPane(tabela);
-		painelPane.setBounds(20, 20, 470, 330);
+		painelPane.setBounds(40, 25, 400, 330);
 		add(painelPane);
 	}
 	public JButton getBotaoSair() {
@@ -113,7 +108,4 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 		return tabela;
 	}
 
-//	public double getPrecoFinal() {
-//		return precoFinal;
-//	}
 }

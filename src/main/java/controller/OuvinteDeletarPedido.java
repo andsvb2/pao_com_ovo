@@ -1,15 +1,12 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JOptionPane;
-
-import jakarta.persistence.criteria.Order;
 import model.PcoException;
 import model.dao.OrderDAO;
 import view.TelaDetalhamentoCompra;
-import view.TelaMenu;
+import view.TelaFuncionario;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class OuvinteDeletarPedido implements ActionListener {
 	TelaDetalhamentoCompra t;
@@ -26,7 +23,7 @@ public class OuvinteDeletarPedido implements ActionListener {
 			e1.printStackTrace();
 		}
 		t.dispose();
-		new TelaMenu();
+		new TelaFuncionario("Funcionário: lista de pedidos");
 	}
 
 }

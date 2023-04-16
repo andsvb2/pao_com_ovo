@@ -52,7 +52,7 @@ public class TelaMenu extends JanelaPadrao {
 					dispose();					
 					break;
 				case "Sou funcionário":
-					new TelaFuncionario("Funcionário");
+					new TelaFuncionario("Funcionário: lista de pedidos");
 					dispose();				
 					break;
 				case "Sobre":

@@ -18,7 +18,7 @@ public class OuvinteSalvarEmpregado implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         EmployeeDAO employeeDAO = new EmployeeDAO();
-        if(t.getTextName().getText().trim().equals("") && t.getTextPhone().getText().equals("()-")){
+        if(t.getTextName().getText().trim().equals("") || t.getTextPhone().getText().equals("()-")){
             JOptionPane.showMessageDialog(null, "Insira os seus dados");
         }else{
             Employee e = new Employee();
@@ -32,6 +32,5 @@ public class OuvinteSalvarEmpregado implements ActionListener {
             new TelaLoginFuncionario("Login: Selecione a opção que deseja");
             t.dispose();
         }
-
     }
 }

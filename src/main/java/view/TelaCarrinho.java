@@ -21,7 +21,7 @@ public class TelaCarrinho extends JanelaPadrao {
 	private Color amareloQueimado = new Color(205,133,63);
 	private Color branco = new Color(255,250,240);
 	
-	private JButton botaoAdicionarProd;
+	private JButton botaoAdicionarProd, botaoEfetuarCompra;
 	private Order order;	
 	OrderDAO orderdao = new OrderDAO();
 	private List<Product>produtos = new ArrayList<>();	
@@ -39,7 +39,7 @@ public class TelaCarrinho extends JanelaPadrao {
 		
 		 	botaoAdicionarProd = new JButton("Salvar");
 	        botaoAdicionarProd.setForeground(branco);
-	        botaoAdicionarProd.setBounds(265, 330, 150, 30);
+	        botaoAdicionarProd.setBounds(100, 330, 150, 30);
 	        botaoAdicionarProd.setBackground(marrom);
 	        botaoAdicionarProd.addActionListener(new ActionListener() { 	
 	        	
@@ -70,6 +70,23 @@ public class TelaCarrinho extends JanelaPadrao {
 	              
 	        });	
 	        add(botaoAdicionarProd);
+	        
+	        botaoEfetuarCompra = new JButton("Realizar pagamento");
+	        botaoEfetuarCompra.setForeground(branco);
+	        botaoEfetuarCompra.setBounds(265, 330, 150, 30);
+	        botaoEfetuarCompra.setBackground(marrom);
+	        botaoEfetuarCompra.addActionListener(new ActionListener() { 	
+	        	
+	       	@Override
+	            public void actionPerformed(ActionEvent e) {             
+	        		if(e.getSource() == botaoEfetuarCompra) { 
+	        			new TelaPagamentos();        			
+	        			dispose();
+	        		}
+	        	}
+	              
+	        });	
+	        add(botaoEfetuarCompra);
 	        setVisible(true);
 	}
 	

@@ -1,6 +1,7 @@
 package model.dto;
 
 import jakarta.persistence.*;
+import model.enums.PaymentStatus;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,18 @@ public class Order {
 
     @Column(name = "creation_time")
     private LocalDateTime creation_time;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
+    private PaymentStatus paymentStatus = PaymentStatus.PENDENTE;
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
     public Order() {
     }

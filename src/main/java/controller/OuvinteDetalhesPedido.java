@@ -26,7 +26,7 @@ public class OuvinteDetalhesPedido implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Order o = new Order();
 		o = (Order) searchByID(tela.getId());		
-		new TelaDetalhamentoCompra("Detalhamento", o);
+		new TelaDetalhamentoCompra("Detalhamento do pedido", o);
 		tela.dispose();
 		
 	}

@@ -52,6 +52,8 @@ public class TelaDetalhamentoCompra extends JanelaPadrao{
 	
 	private void addTabela(){
 		modelo = new DefaultTableModel();
+		modelo.addColumn("Nome");
+		modelo.addColumn("telefone");
 		modelo.addColumn("Produto");
 		modelo.addColumn("Descrição");
 		modelo.addColumn("Quantidade");

@@ -3,12 +3,13 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import view.JanelaPadrao;
 import view.TelaFuncionario;
 import view.TelaMenu;
 
 public class OuvinteVoltarParaMenu implements ActionListener {
-	TelaFuncionario t;
-	public OuvinteVoltarParaMenu(TelaFuncionario tela) {
+	JanelaPadrao t;
+	public OuvinteVoltarParaMenu(JanelaPadrao tela) {
 		t = tela;
 	}
 	@Override

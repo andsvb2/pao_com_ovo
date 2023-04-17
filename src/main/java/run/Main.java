@@ -1,5 +1,7 @@
 package run;
 
+import view.TelaCadastroFuncionario;
+import view.TelaLoginFuncionario;
 import view.TelaMenu;
 
 public class Main {

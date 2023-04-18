@@ -119,4 +119,23 @@ public class OrderItemDAO extends DAO {
         return orderItems;
     }
 
+    public List<OrderItem> findItemsByOrder(long orderID) throws PcoException {
+        EntityManager em = getEntityManager();
+        List<OrderItem> orderItems = new ArrayList<>();
+        try {
+            em.getTransaction().begin();
+            String jpql = "SELECT o FROM OrderItem o WHERE o.order.id = :orderID";
+            TypedQuery<OrderItem> query = em.createQuery(jpql, OrderItem.class);
+            query.setParameter("id", orderID);
+            orderItems = query.getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar itens de produtos.", e);
+        } finally {
+            em.close();
+        }
+        return orderItems;
+    }
+
 }

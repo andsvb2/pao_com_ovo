@@ -17,7 +17,7 @@ public class OrderDAO extends DAO {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         try {
-            order.setCreation_time(LocalDateTime.now());
+            order.setCreationTime(LocalDateTime.now());
             em.persist(order);
             transaction.commit();
         } catch (PersistenceException pe) {
@@ -35,7 +35,7 @@ public class OrderDAO extends DAO {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
-        order.setCreation_time(LocalDateTime.now());
+        order.setCreationTime(LocalDateTime.now());
         Order resultado = order;
         try {
             resultado = em.merge(order);

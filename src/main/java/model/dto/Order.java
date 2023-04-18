@@ -17,19 +17,20 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "creation_time")
+    private LocalDateTime creation_time;
+
     private String customer_name;
 
     private String customer_phone;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "order_product",
+            name = "order_items",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
-
-    @Column(name = "creation_time")
-    private LocalDateTime creation_time;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status")
@@ -51,16 +52,6 @@ public class Order {
         this.customer_phone = customer_phone;
         this.products = products;
         this.creation_time = creation_time;
-    }
-
-    public void addProduct(Product product) {
-        products.add(product);
-        product.getOrders().add(this);
-    }
-
-    public void removeProduct(Product product) {
-        products.remove(product);
-        product.getOrders().remove(this);
     }
 
     public Long getId() {

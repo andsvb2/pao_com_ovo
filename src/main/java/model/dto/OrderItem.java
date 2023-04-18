@@ -60,6 +60,15 @@ public class OrderItem {
     }
 
     @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "order = " + order + ", " +
+                "product = " + product + ", " +
+                "quantity = " + quantity + ")";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
@@ -70,14 +79,5 @@ public class OrderItem {
     @Override
     public int hashCode() {
         return getClass().hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "order = " + order + ", " +
-                "product = " + product + ", " +
-                "quantity = " + quantity + ")";
     }
 }

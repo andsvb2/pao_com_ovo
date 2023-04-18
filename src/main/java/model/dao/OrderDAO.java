@@ -6,12 +6,9 @@ import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import model.PcoException;
 import model.dto.Order;
-import model.dto.Product;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 
 public class OrderDAO extends DAO {
 

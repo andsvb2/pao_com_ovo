@@ -5,78 +5,78 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import model.PcoException;
-import model.dto.Product;
+import model.dto.OrderItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAO  extends DAO {
+public class OrderItemDAO extends DAO {
 
-    public void save(Product product) throws PcoException {
+    public void save(OrderItem orderItem) throws PcoException {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         try {
-            em.persist(product);
+            em.persist(orderItem);
             transaction.commit();
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new PcoException("Ocorreu algum erro ao tentar salvar o produto.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar salvar o item do pedido.", pe);
         } finally {
             em.close();
         }
     }
 
-    public Product update(Product product) throws PcoException {
+    public OrderItem update(OrderItem orderItem) throws PcoException {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
-        Product resultado = product;
+        OrderItem resultado = orderItem;
         try {
-            resultado = em.merge(product);
+            resultado = em.merge(orderItem);
             transaction.commit();
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new PcoException("Ocorreu algum erro ao tentar atualizar o produto.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar atualizar o item do pedido.", pe);
         } finally {
             em.close();
         }
         return resultado;
     }
 
-    public void delete(Product product) throws PcoException {
+    public void delete(OrderItem orderItem) throws PcoException {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         try {
-            product = em.find(Product.class, product.getId());
-            em.remove(product);
+            orderItem = em.find(OrderItem.class, orderItem.getId());
+            em.remove(orderItem);
             transaction.commit();
         } catch (PersistenceException pe) {
             pe.printStackTrace();
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new PcoException("Ocorreu algum erro ao tentar remover o produto.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar remover o item do pedido.", pe);
         } finally {
             em.close();
         }
     }
 
-    public Product getByID(Long id) throws PcoException {
+    public OrderItem getByID(Long orderItemId) throws PcoException {
         EntityManager em = getEntityManager();
-        Product resultado = null;
+        OrderItem resultado = null;
         try {
-            resultado = em.find(Product.class, id);
+            resultado = em.find(OrderItem.class, orderItemId);
         } catch (PersistenceException pe) {
             pe.printStackTrace();
-            throw new PcoException("Ocorreu algum erro ao tentar recuperar o produto com base no ID.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar o item do pedido com base no ID.", pe);
         } finally {
             em.close();
         }
@@ -84,37 +84,39 @@ public class ProductDAO  extends DAO {
         return resultado;
     }
 
-    public List<Product> getAll() throws PcoException {
+    public List<OrderItem> getAll() throws PcoException {
         EntityManager em = getEntityManager();
-        List<Product> resultado = null;
+        List<OrderItem> resultado = null;
         try {
-            TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p", Product.class);
+            TypedQuery<OrderItem> query = em.createQuery("SELECT o FROM OrderItem o", OrderItem.class);
             resultado = query.getResultList();
         } catch (PersistenceException pe) {
             pe.printStackTrace();
-            throw new PcoException("Ocorreu algum erro ao tentar recuperar todos os produtos.", pe);
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar todos os itens dos pedidos.", pe);
         } finally {
             em.close();
         }
         return resultado;
     }
 
-    public List<Product> findProductsByName(String name) throws PcoException {
+    public List<OrderItem> findItemsByOrder(Integer orderID) throws PcoException {
         EntityManager em = getEntityManager();
-        List<Product> products = new ArrayList<>();
+        List<OrderItem> orderItems = new ArrayList<>();
+        Long id = (long) orderID;
         try {
             em.getTransaction().begin();
-            String jpql = "SELECT p FROM Product p WHERE LOWER(p.name) = LOWER(:name)";
-            TypedQuery<Product> query = em.createQuery(jpql, Product.class);
-            query.setParameter("name", name.toLowerCase());
-            products = query.getResultList();
+            String jpql = "SELECT o FROM OrderItem o WHERE o.order.id = :id";
+            TypedQuery<OrderItem> query = em.createQuery(jpql, OrderItem.class);
+            query.setParameter("id", id);
+            orderItems = query.getResultList();
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PcoException("Ocorreu algum erro ao tentar recuperar produtos.", e);
+            throw new PcoException("Ocorreu algum erro ao tentar recuperar itens de produtos.", e);
         } finally {
             em.close();
         }
-        return products;
+        return orderItems;
     }
+
 }

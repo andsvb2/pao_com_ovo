@@ -13,9 +13,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
+import controller.OrderController;
 import model.PcoException;
+import model.dto.Order;
+import model.enums.PaymentStatus;
 
-public class TelaPagamentos extends JanelaPadrao {
+public class TelaPagamentos extends JanelaPadrao{
 	
 	private Color marrom = new Color(160,82,45);
 	private Color branco = new Color(255,250,240);
@@ -23,10 +26,12 @@ public class TelaPagamentos extends JanelaPadrao {
 	private JButton botaoFuncinario;
 	MaskFormatter numeroMask, expedicaoMask, cvvMask; 
 	JTextField numeroField, expedicaoField, cvvField;
+	private Order order;
 	
-	public TelaPagamentos() {
+	public TelaPagamentos(Order order) {
 		super("Dados do pagamento");
-		super.setSize(300,455); 		
+		super.setSize(300,455); 
+		this.order = order;
 		conf();
 		setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -75,25 +80,6 @@ public class TelaPagamentos extends JanelaPadrao {
 	        add(label);
 	}
 	
-	public class OuvinteInternoMenu implements ActionListener{		
-		public void actionPerformed(ActionEvent e) {			
-			String botao = e.getActionCommand();			
-			switch (botao) { 			
-				case "Realizar pagamento":
-					JOptionPane.showMessageDialog(null, "Pagamento realizado com sucesso!");
-				try {
-					new TelaCliente();
-				} catch (PcoException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-					dispose();
-					break;
-				case "Sair":
-					dispose();
-			}		
-		}		
-	}
 	
 	private JButton addButton (String nome, int x, int y, int a, int l) {
 		JButton button = new JButton(nome);
@@ -101,11 +87,31 @@ public class TelaPagamentos extends JanelaPadrao {
 		button.setBounds(x, y, a,l);
 		button.setBackground(marrom);
 		add(button);
-		button.addActionListener(new OuvinteInternoMenu());
+		button.addActionListener(new Ouvinte());
 		return button;
 	}
-	
-	public static void main(String[] args) {
-		new TelaPagamentos();
+
+	public class Ouvinte implements ActionListener{		
+		public void actionPerformed(ActionEvent e) {
+			OrderController orderController = new OrderController();
+			String botao = e.getActionCommand();	
+			
+		switch (botao) { 			
+			case "Realizar pagamento":
+				JOptionPane.showMessageDialog(null, "Pagamento realizado com sucesso!");
+				orderController.payOrder(order, PaymentStatus.APROVADO);
+				try {
+				new TelaCliente();
+			} catch (PcoException e1) {
+				e1.printStackTrace();
+			}
+				dispose();
+				break;
+			case "Sair":
+				dispose();
+		}		
+		
+	}
+		
 	}
 }

@@ -24,7 +24,8 @@ public class TelaCarrinho extends JanelaPadrao {
 	private Color branco = new Color(255,250,240);
 	
 	private JButton botaoAdicionarProd, botaoEfetuarCompra;
-	private Order order;	
+	private Order order;
+
 	private OrderController orderController = new OrderController();
 	OrderDAO orderdao = new OrderDAO();
 	private List<Product>produtos = new ArrayList<>();	
@@ -48,8 +49,7 @@ public class TelaCarrinho extends JanelaPadrao {
 	        	
 	       	@Override
 	            public void actionPerformed(ActionEvent e) {             
-	        		if(e.getSource() == botaoAdicionarProd) { 
-	        			
+	        		if(e.getSource() == botaoAdicionarProd) {         			
 							try {
 								orderdao.save(order);
 							} catch (PcoException e1) {
@@ -83,7 +83,7 @@ public class TelaCarrinho extends JanelaPadrao {
 	       	@Override
 	            public void actionPerformed(ActionEvent e) {             
 	        		if(e.getSource() == botaoEfetuarCompra) { 
-	        			new TelaPagamentos();        			
+	        			new TelaPagamentos(order);        			
 	        			dispose();
 	        		}
 	        	}
@@ -124,7 +124,6 @@ public class TelaCarrinho extends JanelaPadrao {
 	    add(painelTabela); 
 	 }
 	 
-     	
 		public List<Product> getProdutos() {
 			return produtos;
 		}

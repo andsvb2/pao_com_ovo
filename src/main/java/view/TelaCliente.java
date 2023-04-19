@@ -141,7 +141,7 @@ public class TelaCliente extends JFrame {
 		  qtdField.setForeground(marrom); qtdField.setBounds(195, 310, 20, 20);
 		  qtdField.setText(Integer.toString(quantity));
 		  		  
-		  quantity = Integer.parseInt(qtdField.getText());
+		
 		  
 		  botaoMais = new JButton("+"); botaoMais.setForeground(branco);
 		  botaoMais.setBounds(220, 310, 50,10); botaoMais.setBackground(marrom);
@@ -169,7 +169,8 @@ public class TelaCliente extends JFrame {
 					
 				}
 			});
-		  painel.add(botaoMenos);        
+		  painel.add(botaoMenos); 
+		  quantity = Integer.parseInt(qtdField.getText());
 		  add(qtdField);
         JButton voltarButton = new JButton("Cancelar");
         voltarButton.setBounds(320, 370, 120, 30);

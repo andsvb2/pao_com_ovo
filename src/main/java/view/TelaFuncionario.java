@@ -21,7 +21,6 @@ import model.PcoException;
 import model.dao.OrderDAO;
 import model.dao.ProductDAO;
 import model.dto.Order;
-import model.dto.Product;
 
 public class TelaFuncionario extends JanelaPadrao{
 	private JButton botaoSair;
@@ -62,8 +61,8 @@ public class TelaFuncionario extends JanelaPadrao{
 	      		
 	        	for(Order pedido : pedidos){       
 	        		Object[] linha = new Object[2];
-	        		linha[0] = pedido.getCustomer_name();
-	                linha[1] = pedido.getCustomer_phone();
+	        		linha[0] = pedido.getCustomerName();
+	                linha[1] = pedido.getCustomerPhone();
 	                modelo.addRow(linha);
 	            }
 	       }    	        

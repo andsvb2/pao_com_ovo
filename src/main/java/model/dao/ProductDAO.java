@@ -5,7 +5,6 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import model.PcoException;
-import model.dto.Employee;
 import model.dto.Product;
 
 import java.util.ArrayList;

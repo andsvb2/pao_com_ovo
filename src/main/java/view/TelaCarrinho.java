@@ -1,9 +1,11 @@
 package view;
 
+import controller.OrderController;
 import jakarta.persistence.PersistenceException;
 import model.PcoException;
 import model.dao.OrderDAO;
 import model.dto.Order;
+import model.dto.OrderItem;
 import model.dto.Product;
 
 import javax.swing.*;
@@ -23,6 +25,7 @@ public class TelaCarrinho extends JanelaPadrao {
 	
 	private JButton botaoAdicionarProd, botaoEfetuarCompra;
 	private Order order;	
+	private OrderController orderController = new OrderController();
 	OrderDAO orderdao = new OrderDAO();
 	private List<Product>produtos = new ArrayList<>();	
 	
@@ -30,7 +33,7 @@ public class TelaCarrinho extends JanelaPadrao {
 		super("Carrinho");
 		super.setSize(440, 420);
 		this.order = o;	
-		produtos = order.getProducts();
+		produtos = orderController.getProducts(o);
 		try {
 			tab();
 		} catch (PcoException e) {
@@ -99,7 +102,7 @@ public class TelaCarrinho extends JanelaPadrao {
 	    modelo.addColumn("Descrição");
 	    modelo.addColumn("Preço");	    
 	    try {
-	      	produtos = order.getProducts();
+	      	produtos = orderController.getProducts(order);
 	      	if(produtos.size() > 0){
 	            
 	        	for(Product produto : produtos){             

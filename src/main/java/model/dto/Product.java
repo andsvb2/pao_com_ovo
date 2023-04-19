@@ -22,27 +22,8 @@ public class Product {
     @Column(name = "quantity_per_unit")
     private Float quantityPerUnit;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "products")
-    private List<Order> orders = new ArrayList<>();
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    public Float getQuantityPerUnit() {
-        return quantityPerUnit;
-    }
-
-    public void setQuantityPerUnit(Float quantityPerUnit) {
-        this.quantityPerUnit = quantityPerUnit;
-    }
-
-    public Product() {
-    }
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -76,13 +57,20 @@ public class Product {
         this.unit_price = unit_price;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "name = " + name + ", " +
-                "description = " + description + ", " +
-                "unit_price = " + unit_price + ")";
+    public Float getQuantityPerUnit() {
+        return quantityPerUnit;
+    }
+
+    public void setQuantityPerUnit(Float quantityPerUnit) {
+        this.quantityPerUnit = quantityPerUnit;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override
@@ -96,5 +84,15 @@ public class Product {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "name = " + name + ", " +
+                "description = " + description + ", " +
+                "unit_price = " + unit_price + ", " +
+                "quantityPerUnit = " + quantityPerUnit + ")";
     }
 }

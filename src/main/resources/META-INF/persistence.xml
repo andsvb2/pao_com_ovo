@@ -8,6 +8,7 @@
         <class>model.dto.Order</class>
         <class>model.dto.Product</class>
         <class>model.dto.Employee</class>
+        <class>model.dto.OrderItem</class>
 
 <!--        <properties>-->
 <!--            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/pco"/>-->

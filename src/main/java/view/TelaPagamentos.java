@@ -9,8 +9,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+
+import model.PcoException;
 
 public class TelaPagamentos extends JanelaPadrao {
 	
@@ -77,6 +80,14 @@ public class TelaPagamentos extends JanelaPadrao {
 			String botao = e.getActionCommand();			
 			switch (botao) { 			
 				case "Realizar pagamento":
+					JOptionPane.showMessageDialog(null, "Pagamento realizado com sucesso!");
+				try {
+					new TelaCliente();
+				} catch (PcoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+					dispose();
 					break;
 				case "Sair":
 					dispose();

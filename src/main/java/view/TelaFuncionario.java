@@ -11,12 +11,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import controller.ModeloTabelaParaPintarCedula;
 import controller.OuvinteDetalhesPedido;
 import controller.OuvinteVoltarParaMenu;
 import jakarta.persistence.PersistenceException;
@@ -28,6 +26,7 @@ import model.dto.Product;
 import org.hibernate.grammars.hql.HqlParser;
 
 public class TelaFuncionario extends JanelaPadrao{
+    private JPanel contentPane;
 	private JButton botaoSair;
 	private JButton botaoDetalhes;
 	private JButton botaoRefresh;
@@ -99,9 +98,12 @@ public class TelaFuncionario extends JanelaPadrao{
 				}
 			});
 	        
-        JScrollPane painelTabela = new JScrollPane(tabela);
+        JScrollPane painelTabela = new JScrollPane();
+        painelTabela.setViewportView(tabela);
+        tabela.setDefaultRenderer(Object.class, new ModeloTabelaParaPintarCedula());
 	    painelTabela.setBounds(20, 20, 470, 330);
-	    add(painelTabela);  
+
+        add(painelTabela);
      }
 	private void adJbutton() {
 		botaoSair = new JButton("Voltar");

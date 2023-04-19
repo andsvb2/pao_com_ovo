@@ -48,7 +48,7 @@ public class TelaCliente extends JFrame {
 	private List<Product>produtos1 = new ArrayList<>();		
 	private int linhaSelecionada;
 	private Order order = new Order();
- 
+	int quantity = 1;
 	 
     public JLabel addLabel(String nome, int x, int y, int a, int l) {     
  	     JLabel nomeLabel = new JLabel(nome);
@@ -96,7 +96,7 @@ public class TelaCliente extends JFrame {
         			try {
 						OrderItem orderItem = new OrderItem();
 						orderItem.setProduct(productDao.getByID(id));
-						orderItem.setQuantity(1);
+						orderItem.setQuantity(quantity);
 						order.addOrderItem(orderItem);
 						order.setCustomerName(nomeField.getText());
 						order.setCustomerPhone(telefoneField.getText());
@@ -135,20 +135,42 @@ public class TelaCliente extends JFrame {
       }});
         painel.add(botaoVerSacola);
 
-		  //RESERVADO PARA ATUALIZAÇOES FUTURAS - (Botão QUANTIDADE)
-		  
-		  addLabel("Quantidade:", 120, 310, 100, 20); qtdField = new JTextField();
+		  //RESERVADO PARA ATUALIZAÇOES FUTURAS - (Botão QUANTIDAD
+		  addLabel("Quantidade:", 120, 310, 100, 20); 
+		  qtdField = new JTextField();
 		  qtdField.setForeground(marrom); qtdField.setBounds(195, 310, 20, 20);
-		  add(qtdField);
+		  qtdField.setText(Integer.toString(quantity));
+		  		  
+		  quantity = Integer.parseInt(qtdField.getText());
 		  
 		  botaoMais = new JButton("+"); botaoMais.setForeground(branco);
 		  botaoMais.setBounds(220, 310, 50,10); botaoMais.setBackground(marrom);
+		  botaoMais.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == botaoMais) {
+					quantity = quantity + 1;
+				}
+				
+			}
+		});
 		  painel.add(botaoMais);
 		  
 		  botaoMenos = new JButton("-"); botaoMenos.setForeground(branco);
 		  botaoMenos.setBounds(220, 320, 50, 10); botaoMenos.setBackground(marrom);
+		  botaoMenos.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(e.getSource() == botaoMenos) {
+						quantity = quantity - 1;
+					}
+					
+				}
+			});
 		  painel.add(botaoMenos);        
-        
+		  add(qtdField);
         JButton voltarButton = new JButton("Cancelar");
         voltarButton.setBounds(320, 370, 120, 30);
         voltarButton.setBackground(marrom);
@@ -188,6 +210,38 @@ public class TelaCliente extends JFrame {
             public void actionPerformed(ActionEvent e) {
 				try {
 					produtos1 = productDao.findProductsByName(buscaField.getText());
+//
+//					tfPesquisa.getDocument().addDocumentListener(new DocumentListener() {
+//
+//						@Override
+//						public void insertUpdate(DocumentEvent e) {
+//							String text = tfPesquisa.getText();
+//
+//							if (text.trim().length() == 0) {
+//								rowSorter.setRowFilter(null);
+//							} else {
+//								rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+//							}
+//						}
+//
+//						@Override
+//						public void removeUpdate(DocumentEvent e) {
+//							String text = tfPesquisa.getText();
+//
+//							if (text.trim().length() == 0) {
+//								rowSorter.setRowFilter(null);
+//							} else {
+//								rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+//							}
+//						}
+//
+//						@Override
+//						public void changedUpdate(DocumentEvent e) {
+//							throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods,
+//							// choose Tools | Templates.
+//						}
+//
+//					}
 					tab();
 				} catch (PcoException ex) {
 					throw new RuntimeException(ex);
@@ -260,5 +314,7 @@ public class TelaCliente extends JFrame {
         JScrollPane painelTabela = new JScrollPane(tabela);
 	    painelTabela.setBounds(20, 100, 400, 200);
 	    add(painelTabela);  
-     }   
+     }
 }
+
+

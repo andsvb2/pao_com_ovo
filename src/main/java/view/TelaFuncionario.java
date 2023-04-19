@@ -5,15 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import controller.ModeloTabelaParaPintarCedula;
 import controller.OuvinteDetalhesPedido;
 import controller.OuvinteVoltarParaMenu;
 import jakarta.persistence.PersistenceException;
@@ -21,8 +22,11 @@ import model.PcoException;
 import model.dao.OrderDAO;
 import model.dao.ProductDAO;
 import model.dto.Order;
+import model.dto.Product;
+import org.hibernate.grammars.hql.HqlParser;
 
 public class TelaFuncionario extends JanelaPadrao{
+    private JPanel contentPane;
 	private JButton botaoSair;
 	private JButton botaoDetalhes;
 	private JButton botaoRefresh;
@@ -51,21 +55,26 @@ public class TelaFuncionario extends JanelaPadrao{
 	}
 	
 	public void addTabela() throws PcoException {   	
-	    //colunas da lista 
+	    //colunas da lista
+		LocalDateTime localDateTime = LocalDateTime.now();
 	    modelo  = new DefaultTableModel();
-	    modelo.addColumn("Nome");
+		modelo.addColumn("Horário");
+		modelo.addColumn("Nome");
         modelo.addColumn("Telefone");
+		modelo.addColumn("Pagamento");
         
         try {
 	      	if(pedidos.size() > 0){
-	      		
-	        	for(Order pedido : pedidos){       
-	        		Object[] linha = new Object[2];
-	        		linha[0] = pedido.getCustomerName();
-	                linha[1] = pedido.getCustomerPhone();
-	                modelo.addRow(linha);
-	            }
-	       }    	        
+	        	for(Order pedido : pedidos){
+	        		Object[] linha = new Object[4];
+	        		linha[0] = pedido.getCreationTime().getHour()+":"+ pedido.getCreationTime().getMinute();
+					linha[1] = pedido.getCustomerName();
+	                linha[2] = pedido.getCustomerPhone();
+					linha[3] = pedido.getPaymentStatus();
+					modelo.addRow(linha);
+				}
+
+	       }
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 		}
@@ -90,11 +99,13 @@ public class TelaFuncionario extends JanelaPadrao{
 				}
 			});
 	        
-        JScrollPane painelTabela = new JScrollPane(tabela);
+        JScrollPane painelTabela = new JScrollPane();
+        painelTabela.setViewportView(tabela);
+        tabela.setDefaultRenderer(Object.class, new ModeloTabelaParaPintarCedula());
 	    painelTabela.setBounds(20, 20, 470, 330);
-	    add(painelTabela);  
+
+        add(painelTabela);
      }
-	
 	private void adJbutton() {
 		botaoSair = new JButton("Voltar");
 		botaoSair.setBounds(20, 360, 100, 30);

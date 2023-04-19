@@ -27,6 +27,12 @@ public class MainDB {
             OrderItem item1 = new OrderItem(produtos.get(2), 5);
             pedido.addOrderItem(item1);
 
+            OrderItem item2 = new OrderItem(produtos.get(0), 1);
+            pedido.addOrderItem(item2);
+
+            OrderItem item3 = new OrderItem(produtos.get(1), 2);
+            pedido.addOrderItem(item3);
+
             orderDAO.save(pedido);
 
         } catch (PcoException pcoException){

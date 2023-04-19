@@ -67,13 +67,14 @@ public class TelaFuncionario extends JanelaPadrao{
 	      	if(pedidos.size() > 0){
 	        	for(Order pedido : pedidos){
 	        		Object[] linha = new Object[4];
-	        		linha[0] = pedido.getCreation_time().getHour()+":"+ pedido.getCreation_time().getMinute();
-					linha[1] = pedido.getCustomer_name();
-	                linha[2] = pedido.getCustomer_phone();
+	        		linha[0] = pedido.getCreationTime().getHour()+":"+ pedido.getCreationTime().getMinute();
+					linha[1] = pedido.getCustomerName();
+	                linha[2] = pedido.getCustomerPhone();
 					linha[3] = pedido.getPaymentStatus();
 					modelo.addRow(linha);
 				}
-	       }    	        
+
+	       }
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 		}

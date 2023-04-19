@@ -45,16 +45,16 @@ public class PopulateProducts {
 
             Product paoFrances = new Product();
             paoFrances.setName("Pão Francês");
-            paoFrances.setUnit_price(1.00);
+            paoFrances.setUnit_price(0.75);
             paoFrances.setDescription("Pão Francês");
-            paoFrances.setQuantityPerUnit(0.75f);
+            paoFrances.setQuantityPerUnit(1f);
             products.add(paoFrances);
 
             Product limpadorMultiUso = new Product();
             limpadorMultiUso.setName("Limpador Multi Uso");
-            limpadorMultiUso.setUnit_price(500.0);
+            limpadorMultiUso.setUnit_price(5.5);
             limpadorMultiUso.setDescription("Limpador Multi Uso");
-            limpadorMultiUso.setQuantityPerUnit(5.5f);
+            limpadorMultiUso.setQuantityPerUnit(500f);
             products.add(limpadorMultiUso);
 
             Product shampoo = new Product();

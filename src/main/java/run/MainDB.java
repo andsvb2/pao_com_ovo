@@ -15,6 +15,7 @@ public class MainDB {
     public static void main(String[] args) {
 
         PopulateProducts.main(new String[]{});
+        PopulateEmployees.main(new String[]{});
         ProductDAO productDAO = new ProductDAO();
         OrderDAO orderDAO = new OrderDAO();
         OrderItemDAO orderItemDAO = new OrderItemDAO();

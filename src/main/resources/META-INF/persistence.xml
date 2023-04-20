@@ -8,19 +8,13 @@
         <class>model.dto.Order</class>
         <class>model.dto.Product</class>
         <class>model.dto.Employee</class>
+        <class>model.dto.OrderItem</class>
 
-<!--        <properties>-->
-<!--            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/pco"/>-->
-<!--            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>-->
-<!--            <property name="hibernate.connection.username" value="pco"/>-->
-<!--            <property name="hibernate.connection.password" value="pco"/>-->
-<!--            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>-->
-<!--        </properties>-->
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://containers-us-west-133.railway.app:6914/railway?ssl=true&amp;sslmode=allow"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/pco"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.username" value="postgres"/>
-            <property name="hibernate.connection.password" value="61R75TLfeKQ7lZS5WgaJ"/>
+            <property name="hibernate.connection.username" value="pco"/>
+            <property name="hibernate.connection.password" value="pco"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
         </properties>
 

@@ -1,6 +1,7 @@
 package model.dto;
 
 import jakarta.persistence.*;
+import model.enums.PaymentStatus;
 import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
@@ -16,38 +17,40 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String customer_name;
+    private LocalDateTime creationTime;
 
-    private String customer_phone;
+    private String customerName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products = new ArrayList<>();
+    private String customerPhone;
 
-    @Column(name = "creation_time")
-    private LocalDateTime creation_time;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "order_items",
+//            joinColumns = @JoinColumn(name = "order_id"),
+//            inverseJoinColumns = @JoinColumn(name = "product_id"))
+//    private List<Product> products = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
+    private PaymentStatus paymentStatus = PaymentStatus.PENDENTE;
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 
     public Order() {
     }
 
-    public Order(String customer_name, String customer_phone, List<Product> products, LocalDateTime creation_time) {
-        this.customer_name = customer_name;
-        this.customer_phone = customer_phone;
-        this.products = products;
-        this.creation_time = creation_time;
-    }
-
-    public void addProduct(Product product) {
-        products.add(product);
-        product.getOrders().add(this);
-    }
-
-    public void removeProduct(Product product) {
-        products.remove(product);
-        product.getOrders().remove(this);
+    public Order(String customerName, String customerPhone) {
+        this.customerName = customerName;
+        this.customerPhone = customerPhone;
     }
 
     public Long getId() {
@@ -58,36 +61,42 @@ public class Order {
         this.id = id;
     }
 
-    public String getCustomer_name() {
-        return customer_name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getCustomer_phone() {
-        return customer_phone;
+    public String getCustomerPhone() {
+        return customerPhone;
     }
 
-    public void setCustomer_phone(String customer_phone) {
-        this.customer_phone = customer_phone;
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
     }
 
-    public LocalDateTime getCreation_time() {
-        return creation_time;
+    public void removeOrderItem(OrderItem orderItem) {
+        orderItems.remove(orderItem);
+        orderItem.setOrder(null);
     }
 
-    public void setCreation_time(LocalDateTime creation_time) {
-        this.creation_time = creation_time;
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creation_time) {
+        this.creationTime = creation_time;
     }
 
     @Override
@@ -107,8 +116,8 @@ public class Order {
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
-                "customer_name = " + customer_name + ", " +
-                "customer_phone = " + customer_phone + ", " +
-                "creation_time = " + creation_time + ")";
+                "customer_name = " + customerName + ", " +
+                "customer_phone = " + customerPhone + ", " +
+                "creation_time = " + creationTime + ")";
     }
 }
